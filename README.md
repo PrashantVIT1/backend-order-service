@@ -20,3 +20,12 @@ The application follows <b>industry-standard layered architecture</b> (Controlle
 - Maven
 - Docker & Docker Compose
 - GitHub Actions
+
+## Project Structure
+
+src/main/java/com/company/order
+├── controller   # REST API controllers
+├── service      # Business logic
+├── model        # Domain models / entities
+├── repository   # Data access layer
+├── config       # Application configuration
