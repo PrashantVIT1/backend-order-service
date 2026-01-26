@@ -27,7 +27,7 @@ public class OrderService {
 
     public Order getOrderById(Long id){
         Order obj = arr.get(arr.size()-1);
-        System.out.println(obj.getId()+" "+obj.getStatus()+" "+obj.getCreatedAt());
+//        System.out.println(obj.getId()+" "+obj.getStatus()+" "+obj.getCreatedAt());
         return arr.get(arr.size()-1); //temporary
     }
 }
