@@ -22,10 +22,11 @@ The application follows <b>industry-standard layered architecture</b> (Controlle
 - GitHub Actions
 
 ## Project Structure
-
+<pre>
 src/main/java/com/company/order
 ├── controller   # REST API controllers
 ├── service      # Business logic
 ├── model        # Domain models / entities
 ├── repository   # Data access layer
 ├── config       # Application configuration
+</pre>
