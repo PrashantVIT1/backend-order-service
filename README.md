@@ -30,3 +30,6 @@ src/main/java/com/company/order
 ├── repository   # Data access layer
 ├── config       # Application configuration
 </pre>
+## CI/CD Workflow
+<img width="990" height="604" alt="image" src="https://github.com/user-attachments/assets/3ca6d4d6-d0b2-4325-908f-528656597ff7" />
+
