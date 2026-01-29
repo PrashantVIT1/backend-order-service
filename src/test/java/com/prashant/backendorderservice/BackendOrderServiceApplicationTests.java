@@ -1,4 +1,4 @@
-package com.prashant.backend_order_service;
+package com.prashant.backendorderservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
