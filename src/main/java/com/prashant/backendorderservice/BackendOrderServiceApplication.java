@@ -1,4 +1,4 @@
-package com.prashant.orderservice.backend_order_service;
+package com.prashant.backendorderservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackendOrderServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendOrderServiceApplication.class, args);
+
+        SpringApplication.run(BackendOrderServiceApplication.class, args);
 	}
 
 }

@@ -1,6 +1,6 @@
-package com.prashant.orderservice.backend_order_service.repository;
+package com.prashant.backendorderservice.repository;
 
-import com.prashant.orderservice.backend_order_service.model.Order;
+import com.prashant.backendorderservice.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
