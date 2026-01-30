@@ -1,11 +1,13 @@
 package com.prashant.backendorderservice.controller;
 
-import com.prashant.backendorderservice.model.Order;
+import com.prashant.backendorderservice.dto.request.CreateOrderRequest;
+import com.prashant.backendorderservice.dto.response.OrderResponse;
 import com.prashant.backendorderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -13,15 +15,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("")
 public class OrderController {
 
-    private final OrderService  orderService;
+    private final OrderService orderService;
 
     @GetMapping("order")
-    public ResponseEntity<Order> getOrderById(@RequestParam Long id){
+    public ResponseEntity<OrderResponse> getOrderById(@RequestParam Long id){
         return new ResponseEntity<>(orderService.getOrderById(id),HttpStatus.OK);
     }
 
     @PostMapping("orderplace")
-    public ResponseEntity<String> createOrder(@RequestParam Long customerId, @RequestParam String description){
-        return new ResponseEntity<>(orderService.createOrder(customerId, description), HttpStatus.CREATED);
+    public ResponseEntity<String> createOrder(@Valid @RequestBody CreateOrderRequest request){
+        Long orderId = orderService.createOrder(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("Order created with id: " + orderId);
     }
 }
