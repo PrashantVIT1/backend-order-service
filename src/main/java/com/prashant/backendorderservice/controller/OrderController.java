@@ -1,8 +1,10 @@
 package com.prashant.backendorderservice.controller;
 
+import com.prashant.backendorderservice.model.Order;
 import com.prashant.backendorderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -10,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("")
 public class OrderController {
-    @Autowired
+
     private final OrderService  orderService;
 
     @GetMapping("order")
-    public Object getOrderById(@RequestParam Long id){
-
-        return orderService.getOrderById(id);
+    public ResponseEntity<Order> getOrderById(@RequestParam Long id){
+        return new ResponseEntity<>(orderService.getOrderById(id),HttpStatus.OK);
     }
+
     @PostMapping("orderplace")
-    public String createOrder(@RequestParam Long customerId,@RequestParam String description){
-        return orderService.createOrder(customerId, description);
+    public ResponseEntity<String> createOrder(@RequestParam Long customerId, @RequestParam String description){
+        return new ResponseEntity<>(orderService.createOrder(customerId, description), HttpStatus.CREATED);
     }
 }
