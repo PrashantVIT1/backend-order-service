@@ -5,15 +5,16 @@ A production-ready <b>Spring Boot microservice</b> responsible for managing orde
 
 The application follows <b>industry-standard layered architecture</b> (Controller, Service, Repository) and is designed to be easily extensible for database integration, security, and cloud deployment. CI pipelines are configured using <b>GitHub Actions</b> to automate builds and ensure code quality.
 
-## Key Highlights:
+## 🚀 Key Highlights
 
-- RESTful APIs built with Spring Boot
-- Clean, company-grade project structure
-- In-memory storage (easily replaceable with a real database)
-- Dockerized for container-based deployment
-- Docker Compose support for multi-service setups
-- CI workflow using GitHub Actions
-- Ready for cloud and microservices environments
+- RESTful APIs developed using Spring Boot
+- Clean, scalable, company-grade layered architecture
+- DTO-based design for clear separation between API and domain models
+- PostgreSQL persistence (easy to switch to MySQL)
+- Dockerized application for containerized deployment
+- Docker Compose support for multi-service environments
+- CI pipeline implemented using GitHub Actions
+- Follows industry best practices for microservices and cloud readiness
 
 ## Tech Stack:
 - Java 17
