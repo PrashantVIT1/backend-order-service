@@ -52,5 +52,6 @@ public class Order {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
     private LocalDateTime updatedAt;
 }

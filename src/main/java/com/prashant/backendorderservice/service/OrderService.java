@@ -28,7 +28,6 @@ public class OrderService implements OrderServiceOperations{
         Order response = orderRepository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Order not found with id: " + id));
-
         return OrderResponse.builder()
                 .id(response.getId())
                 .customerId(response.getCustomerId())
@@ -36,4 +35,14 @@ public class OrderService implements OrderServiceOperations{
                 .status(response.getStatus().name())
                 .build();
     }
+
+
+    public void deleteOrderById(Long id) {
+        Order response = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Order not found with id: " + id));
+        orderRepository.delete(response);
+    }
+
+
 }

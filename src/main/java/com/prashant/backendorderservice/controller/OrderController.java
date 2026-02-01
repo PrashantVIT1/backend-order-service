@@ -17,11 +17,6 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping("order")
-    public ResponseEntity<OrderResponse> getOrderById(@RequestParam Long id){
-        return new ResponseEntity<>(orderService.getOrderById(id),HttpStatus.OK);
-    }
-
     @PostMapping("orderplace")
     public ResponseEntity<String> createOrder(@Valid @RequestBody CreateOrderRequest request){
         Long orderId = orderService.createOrder(request);
@@ -29,4 +24,17 @@ public class OrderController {
                 .status(HttpStatus.CREATED)
                 .body("Order created with id: " + orderId);
     }
+
+
+    @GetMapping("order")
+    public ResponseEntity<OrderResponse> getOrderById(@RequestParam Long id){
+        return new ResponseEntity<>(orderService.getOrderById(id),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/order/remove/{id}")
+    public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
+        orderService.deleteOrderById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
