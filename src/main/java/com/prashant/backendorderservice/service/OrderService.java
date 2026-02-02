@@ -1,8 +1,10 @@
 package com.prashant.backendorderservice.service;
 
 import com.prashant.backendorderservice.dto.request.CreateOrderRequest;
+import com.prashant.backendorderservice.dto.request.UpdateOrderStatusRequest;
 import com.prashant.backendorderservice.dto.response.OrderResponse;
 import com.prashant.backendorderservice.model.Order;
+import com.prashant.backendorderservice.model.OrderStatus;
 import com.prashant.backendorderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,24 @@ public class OrderService implements OrderServiceOperations{
         Order savedOrder = orderRepository.save(order);
         return savedOrder.getId();
     }
+//this code has bug///////////////////////////////////////////////////////////////////////////////////
+    public OrderResponse updateOrderbyId(Long id, UpdateOrderStatusRequest request){
+        Order response = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Order not found with id: " + id));
+
+
+        response.setStatus(request.getStatus());
+
+        orderRepository.save(response);
+
+        return OrderResponse.builder()
+                .id(response.getId())
+                .customerId(response.getCustomerId())
+                .description(response.getDescription())
+                .status(response.getStatus().name())
+                .build();
+    }//this code has bug 1/////////////////////////////////////////////////////////////////////////////////
 
     public OrderResponse getOrderById(Long id) {
         Order response = orderRepository.findById(id)
