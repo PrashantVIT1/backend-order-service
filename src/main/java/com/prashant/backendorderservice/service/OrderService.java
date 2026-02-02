@@ -25,7 +25,7 @@ public class OrderService implements OrderServiceOperations{
         Order savedOrder = orderRepository.save(order);
         return savedOrder.getId();
     }
-//this code has bug///////////////////////////////////////////////////////////////////////////////////
+
     public OrderResponse updateOrderbyId(Long id, UpdateOrderStatusRequest request){
         Order response = orderRepository.findById(id)
                 .orElseThrow(() ->
@@ -42,7 +42,7 @@ public class OrderService implements OrderServiceOperations{
                 .description(response.getDescription())
                 .status(response.getStatus().name())
                 .build();
-    }//this code has bug 1/////////////////////////////////////////////////////////////////////////////////
+    }
 
     public OrderResponse getOrderById(Long id) {
         Order response = orderRepository.findById(id)
