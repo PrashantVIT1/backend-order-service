@@ -35,7 +35,8 @@ src/main/java/com/prashant/backendorderservice
 │
 ├── dto
 │   ├── request
-│   │   └── CreateOrderRequest.java
+│   │   ├── CreateOrderRequest.java
+│   │   └── UpdateOrderStatusRequest.java
 │   │
 │   └── response
 │       └── OrderResponse.java
@@ -57,11 +58,25 @@ src/main/java/com/prashant/backendorderservice
 
 ## Examples
 Post : http://localhost:8082/orderplace
-<img width="1819" height="907" alt="image" src="https://github.com/user-attachments/assets/9836259b-fdb8-41d5-b740-b5494cf99b32" />
-Get : http://localhost:8082/order?id=13
-<img width="1816" height="960" alt="image" src="https://github.com/user-attachments/assets/ad9f7b19-4bc8-4c5e-8a11-51a9dfc1064d" />
-Delete : http://localhost:8082/order/remove/15
-<img width="1819" height="912" alt="image" src="https://github.com/user-attachments/assets/4d5738c1-37d1-4de8-92cd-32d936307463" />
+<pre>
+<img width="1819" height="957" alt="image" src="https://github.com/user-attachments/assets/f0ea0c44-c8b0-405c-bf50-9c8982587f9a" />
+</pre>
+Patch : http://localhost:8082/orders/17
+<pre>
+{ "status": "PROCESSING" } 
+Status values:👇
+<img width="254" height="220" alt="image" src="https://github.com/user-attachments/assets/2ef82f26-6cb9-408c-a7ef-8a91ddefa5d2" />
+<img width="1819" height="926" alt="image" src="https://github.com/user-attachments/assets/f3464126-2f7a-4f34-96a0-8898c9d70eae" />
+</pre>
+
+Get : http://localhost:8082/order?id=17
+<pre>
+<img width="1816" height="923" alt="image" src="https://github.com/user-attachments/assets/cb4674e7-0a76-4fe6-9876-938922c6f0e0" />
+</pre>
+Delete : http://localhost:8082/order/remove/17
+<pre>
+<img width="1817" height="927" alt="image" src="https://github.com/user-attachments/assets/f1f90ea2-4939-4ca2-bf9d-dc4bb5d8bc98" />
+</pre>
 
 
 
