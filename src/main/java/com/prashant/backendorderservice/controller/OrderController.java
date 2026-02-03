@@ -3,6 +3,7 @@ package com.prashant.backendorderservice.controller;
 import com.prashant.backendorderservice.dto.request.CreateOrderRequest;
 import com.prashant.backendorderservice.dto.request.UpdateOrderStatusRequest;
 import com.prashant.backendorderservice.dto.response.OrderResponse;
+import com.prashant.backendorderservice.dto.response.UpdateOrderStatusResponse;
 import com.prashant.backendorderservice.model.OrderStatus;
 import com.prashant.backendorderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,11 @@ public class OrderController {
     }
 
     @PatchMapping("/orders/{id}/status")
-    public ResponseEntity<OrderResponse> updateOrderStatus(
+    public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(
             @PathVariable Long id,
             @Valid @RequestBody UpdateOrderStatusRequest request) {
 
-        OrderResponse response =
-                  orderService.updateOrderbyId(id, request);
-
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(orderService.updateOrderStatusbyId(id,request),HttpStatus.OK);
     }
 
     @GetMapping("order")

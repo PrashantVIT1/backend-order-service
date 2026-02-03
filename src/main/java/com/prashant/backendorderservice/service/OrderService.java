@@ -3,6 +3,7 @@ package com.prashant.backendorderservice.service;
 import com.prashant.backendorderservice.dto.request.CreateOrderRequest;
 import com.prashant.backendorderservice.dto.request.UpdateOrderStatusRequest;
 import com.prashant.backendorderservice.dto.response.OrderResponse;
+import com.prashant.backendorderservice.dto.response.UpdateOrderStatusResponse;
 import com.prashant.backendorderservice.model.Order;
 import com.prashant.backendorderservice.model.OrderStatus;
 import com.prashant.backendorderservice.repository.OrderRepository;
@@ -26,7 +27,7 @@ public class OrderService implements OrderServiceOperations{
         return savedOrder.getId();
     }
 
-    public OrderResponse updateOrderbyId(Long id, UpdateOrderStatusRequest request){
+    public UpdateOrderStatusResponse updateOrderStatusbyId(Long id, UpdateOrderStatusRequest request){
         Order response = orderRepository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Order not found with id: " + id));
@@ -36,11 +37,10 @@ public class OrderService implements OrderServiceOperations{
 
         orderRepository.save(response);
 
-        return OrderResponse.builder()
+        return UpdateOrderStatusResponse.builder()
                 .id(response.getId())
-                .customerId(response.getCustomerId())
-                .description(response.getDescription())
                 .status(response.getStatus().name())
+                .updatedAt(response.getUpdatedAt())
                 .build();
     }
 
