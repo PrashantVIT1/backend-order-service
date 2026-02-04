@@ -20,39 +20,76 @@ The application follows <b>industry-standard layered architecture</b> (Controlle
 - Java 17
 - Spring Boot
 - Maven
+- JUnit5
+- Liquibase
+- sonarqube
+- Swagger
+- Postman
 - Docker & Docker Compose
 - GitHub Actions
 
 ## Project Structure
 <pre>
-src/main/java/com/prashant/backendorderservice
-├── controller
-│   └── OrderController.java
+backend-order-service
 │
-├── service
-│   ├── OrderService.java
-│   └── OrderServiceOperations.java
-│
-├── dto
-│   ├── request
-│   │   ├── CreateOrderRequest.java
-│   │   └── UpdateOrderStatusRequest.java
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com/prashant/backendorderservice
+│   │   │       ├── controller
+│   │   │       │   └── OrderController.java
+│   │   │       │
+│   │   │       ├── service
+│   │   │       │   ├── OrderService.java
+│   │   │       │   └── OrderServiceOperations.java
+│   │   │       │
+│   │   │       ├── dto
+│   │   │       │   ├── request
+│   │   │       │   │   ├── CreateOrderRequest.java
+│   │   │       │   │   └── UpdateOrderStatusRequest.java
+│   │   │       │   │
+│   │   │       │   └── response
+│   │   │       │       ├── OrderResponse.java
+│   │   │       │       └── UpdateOrderStatusResponse.java
+│   │   │       │
+│   │   │       ├── model
+│   │   │       │   ├── Order.java
+│   │   │       │   └── OrderStatus.java
+│   │   │       │
+│   │   │       ├── repository
+│   │   │       │   └── OrderRepository.java
+│   │   │       │
+│   │   │       ├── config
+│   │   │       │   ├── SwaggerConfig.java        (future)
+│   │   │       │   ├── OpenApiConfig.java        (future)
+│   │   │       │   └── GlobalExceptionHandler.java (future)
+│   │   │       │
+│   │   │       └── BackendOrderServiceApplication.java
+│   │   │
+│   │   └── resources
+│   │       ├── application.yml
+│   │       └── application-test.yml
 │   │
-│   └── response
-│       ├── OrderResponse.java       
-│       └── UpdateOrderStatusResponse.java
+│   └── test
+│       ├── java
+│       │   └── com/prashant/backendorderservice
+│       │       ├── controller
+│       │       │   └── OrderControllerTest.java (future)
+│       │       │
+│       │       ├── service
+│       │       │   └── OrderServiceTest.java (future)
+│       │       │
+│       │       ├── repository
+│       │       │   └── OrderRepositoryTest.java (Partially)  
+│       │       │
+│       │       └── BackendOrderServiceApplicationTest.java (future)
+│       │
+│       └── resources
+│           └── application-test.yml
 │
-├── model
-│   ├── Order.java
-│   └── OrderStatus.java
-│
-├── repository
-│   └── OrderRepository.java
-│
-├── config
-│   └── (future configs: SwaggerConfig, SecurityConfig, etc.)
-│
-└── BackendOrderServiceApplication.java
+├── pom.xml
+└── README.md
+
 </pre>
 ## CI/CD Workflow
 <img width="990" height="604" alt="image" src="https://github.com/user-attachments/assets/3ca6d4d6-d0b2-4325-908f-528656597ff7" />
