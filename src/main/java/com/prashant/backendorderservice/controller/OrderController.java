@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("")
+@RequestMapping("/")
 public class OrderController {
 
     private final OrderService orderService;
@@ -29,7 +29,7 @@ public class OrderController {
                 .body("Order created with id: " + orderId);
     }
 
-    @PatchMapping("/orders/{id}/status")
+    @PatchMapping("orders/{id}/status")
     public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(
             @PathVariable Long id,
             @Valid @RequestBody UpdateOrderStatusRequest request) {
@@ -42,7 +42,7 @@ public class OrderController {
         return new ResponseEntity<>(orderService.getOrderById(id),HttpStatus.OK);
     }
 
-    @DeleteMapping("/order/remove/{id}")
+    @DeleteMapping("order/remove/{id}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
         orderService.deleteOrderById(id);
         return ResponseEntity.noContent().build();
