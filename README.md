@@ -80,7 +80,7 @@ backend-order-service
 │       │       │   └── OrderServiceTest.java (future)
 │       │       │
 │       │       ├── repository
-│       │       │   └── OrderRepositoryTest.java (Partially)  
+│       │       │   └── OrderRepositoryTest.java 
 │       │       │
 │       │       └── BackendOrderServiceApplicationTest.java (future)
 │       │
