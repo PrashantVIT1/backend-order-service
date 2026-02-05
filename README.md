@@ -60,8 +60,7 @@ backend-order-service
 │   │   │       │   └── OrderRepository.java
 │   │   │       │
 │   │   │       ├── config
-│   │   │       │   ├── SwaggerConfig.java        (future)
-│   │   │       │   ├── OpenApiConfig.java        (future)
+│   │   │       │   ├── OpenApiConfig.java        
 │   │   │       │   └── GlobalExceptionHandler.java (future)
 │   │   │       │
 │   │   │       └── BackendOrderServiceApplication.java
@@ -94,6 +93,13 @@ backend-order-service
 ## CI/CD Workflow
 <img width="990" height="604" alt="image" src="https://github.com/user-attachments/assets/3ca6d4d6-d0b2-4325-908f-528656597ff7" />
 
+## Swagger API documentation
+Link: http://localhost:8082/swagger-ui/index.html
+<pre>
+
+<img width="1901" height="867" alt="image" src="https://github.com/user-attachments/assets/70819900-adbd-4fec-bbfa-a3ebd5caf365" />
+
+</pre>
 ## Examples
 Post : http://localhost:8082/orderplace
 <pre>
