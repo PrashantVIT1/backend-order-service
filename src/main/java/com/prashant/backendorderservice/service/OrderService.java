@@ -4,8 +4,8 @@ import com.prashant.backendorderservice.dto.request.CreateOrderRequest;
 import com.prashant.backendorderservice.dto.request.UpdateOrderStatusRequest;
 import com.prashant.backendorderservice.dto.response.OrderResponse;
 import com.prashant.backendorderservice.dto.response.UpdateOrderStatusResponse;
+import com.prashant.backendorderservice.exception.OrderNotFoundException;
 import com.prashant.backendorderservice.model.Order;
-import com.prashant.backendorderservice.model.OrderStatus;
 import com.prashant.backendorderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +30,7 @@ public class OrderService implements OrderServiceOperations{
     public UpdateOrderStatusResponse updateOrderStatusbyId(Long id, UpdateOrderStatusRequest request){
         Order response = orderRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Order not found with id: " + id));
+                        new OrderNotFoundException(id));
 
 
         response.setStatus(request.getStatus());
@@ -47,7 +47,7 @@ public class OrderService implements OrderServiceOperations{
     public OrderResponse getOrderById(Long id) {
         Order response = orderRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Order not found with id: " + id));
+                        new OrderNotFoundException(id));
         return OrderResponse.builder()
                 .id(response.getId())
                 .customerId(response.getCustomerId())
