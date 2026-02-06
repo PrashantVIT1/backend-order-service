@@ -49,6 +49,7 @@ backend-order-service
 │   │   │       │   │   └── UpdateOrderStatusRequest.java
 │   │   │       │   │
 │   │   │       │   └── response
+│   │   │       │       ├── ErrorResponse.java
 │   │   │       │       ├── OrderResponse.java
 │   │   │       │       └── UpdateOrderStatusResponse.java
 │   │   │       │
@@ -59,10 +60,13 @@ backend-order-service
 │   │   │       ├── repository
 │   │   │       │   └── OrderRepository.java
 │   │   │       │
-│   │   │       ├── config
-│   │   │       │   ├── OpenApiConfig.java        
-│   │   │       │   └── GlobalExceptionHandler.java (future)
+│   │   │       ├── exception
+│   │   │       │   ├── BusinessException.java   
+│   │   │       │   ├── OrderNotFoundException.java        
+│   │   │       │   └── GlobalExceptionHandler.java
 │   │   │       │
+│   │   │       ├── config      
+│   │   │       │   └── OpenApiConfig.java
 │   │   │       └── BackendOrderServiceApplication.java
 │   │   │
 │   │   └── resources
@@ -105,12 +109,13 @@ Post : http://localhost:8082/orderplace
 <pre>
 <img width="1819" height="957" alt="image" src="https://github.com/user-attachments/assets/f0ea0c44-c8b0-405c-bf50-9c8982587f9a" />
 </pre>
-Patch : http://localhost:8082/orders/17
+Patch : http://localhost:8082/orders/26/status
 <pre>
-{ "status": "PROCESSING" } 
+{ "status": "SHIPPED" } 
 Status values:👇
 <img width="254" height="220" alt="image" src="https://github.com/user-attachments/assets/2ef82f26-6cb9-408c-a7ef-8a91ddefa5d2" />
-<img width="1819" height="926" alt="image" src="https://github.com/user-attachments/assets/f3464126-2f7a-4f34-96a0-8898c9d70eae" />
+<img width="1815" height="930" alt="image" src="https://github.com/user-attachments/assets/8d85497b-eb72-4b88-b8dd-eb61bad5fd59" />
+
 </pre>
 
 Get : http://localhost:8082/order?id=17
