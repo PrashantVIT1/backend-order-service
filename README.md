@@ -16,6 +16,10 @@ The application follows <b>industry-standard layered architecture</b> (Controlle
 - CI pipeline implemented using GitHub Actions
 - Follows industry best practices for microservices and cloud readiness
 
+## Instruction 
+Note: 1) Liquibase Integrated just only `orderdb` database creation will be required to start
+      2) postgres Username and password should be configured in application.properties /application.yaml file recommended use of AWS secrets manager
+
 ## Tech Stack:
 - Java 17
 - Spring Boot
@@ -70,8 +74,11 @@ backend-order-service
 │   │   │       └── BackendOrderServiceApplication.java
 │   │   │
 │   │   └── resources
-│   │       ├── application.yml
-│   │       └── application-test.yml
+│   │       ├── db.changelog
+│   │       │   ├── changes
+│   │       │   │   └── 001-create-orders-table.yaml
+│   │       │   └── db.changelog-master.yaml    
+│   │       └── application.properties
 │   │
 │   └── test
 │       ├── java
