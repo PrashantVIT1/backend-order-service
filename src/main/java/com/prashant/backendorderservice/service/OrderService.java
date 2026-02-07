@@ -60,7 +60,7 @@ public class OrderService implements OrderServiceOperations{
     public void deleteOrderById(Long id) {
         Order response = orderRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Order not found with id: " + id));
+                        new OrderNotFoundException(id));
         orderRepository.delete(response);
     }
 
