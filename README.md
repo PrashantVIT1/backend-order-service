@@ -17,9 +17,11 @@ The application follows <b>industry-standard layered architecture</b> (Controlle
 - Follows industry best practices for microservices and cloud readiness
 
 ## Instruction 
+<pre>
 Note: 1) Liquibase Integrated just only `orderdb` database creation will be required to start
-      2) postgres Username and password should be configured in application.properties /application.yaml file recommended use of AWS secrets manager
-
+      2) postgres Username and password should be configured in application.properties /application.yaml 
+      file recommended use of AWS secrets manager
+</pre>
 ## Tech Stack:
 - Java 17
 - Spring Boot
