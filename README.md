@@ -92,9 +92,9 @@ backend-order-service
 │       │       │   └── OrderServiceTest.java
 │       │       │
 │       │       ├── repository
-│       │       │   └── OrderRepositoryTest.java (future)
+│       │       │   └── OrderRepositoryTest.java
 │       │       │
-│       │       └── BackendOrderServiceApplicationTest.java (future)
+│       │       └── BackendOrderServiceApplicationTest.java 
 │       │
 │       └── resources
 │           └── application-test.yml
