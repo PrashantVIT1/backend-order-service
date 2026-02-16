@@ -10,6 +10,12 @@ databaseChangeLog:
               tableName: orders
 
       changes:
+        - createSequence:
+            sequenceName: order_sequence
+            startValue: 1
+            incrementBy: 1
+
+
         - createTable:
             tableName: orders
             columns:
