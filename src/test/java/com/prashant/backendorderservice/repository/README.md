@@ -9,7 +9,6 @@ These tests validate:
 - Find all
 - Delete operation
 - Correct JPA entity mapping
-- Database integration with PostgreSQL
 - Liquibase schema execution
 - ID generation strategy
 
