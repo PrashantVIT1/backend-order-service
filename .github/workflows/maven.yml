@@ -11,7 +11,6 @@ on:
 jobs:
   build_test:
     runs-on: ubuntu-latest
-    environment: ci 
     
     env:
       DOCKER_HOST: unix:///var/run/docker.sock
