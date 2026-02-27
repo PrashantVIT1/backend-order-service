@@ -11,7 +11,8 @@ on:
 jobs:
   build_test:
     runs-on: ubuntu-latest
-
+    environment: ci 
+    
     env:
       DOCKER_HOST: unix:///var/run/docker.sock
 
@@ -20,9 +21,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 1234567890
-          POSTGRES_DB: orderdb
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
         ports:
           - 5432:5432
         options: >-
@@ -59,7 +60,7 @@ jobs:
     # Build the project and run tests
     - name: Build + Test
       env:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/orderdb
-        SPRING_DATASOURCE_USERNAME: postgres
-        SPRING_DATASOURCE_PASSWORD: 1234567890
+        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/${{ secrets.DB_NAME }}
+        SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: mvn clean verify --no-transfer-progress
