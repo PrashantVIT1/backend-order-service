@@ -18,7 +18,7 @@ jobs:
     # Spin up PostgreSQL as a service
     services:
       postgres:
-        image: postgres:12
+        image: postgres:15
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 1234567890
