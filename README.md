@@ -5,7 +5,7 @@ A production-ready <b>Spring Boot microservice</b> responsible for managing orde
 
 The application follows <b>industry-standard layered architecture</b> (Controller, Service, Repository) and is designed to be easily extensible for database integration, security, and cloud deployment. CI pipelines are configured using <b>GitHub Actions</b> to automate builds and ensure code quality.
 
-## 🚀 Key Highlights
+##  Key Highlights
 
 - RESTful APIs developed using Spring Boot
 - Clean, scalable, company-grade layered architecture
@@ -93,6 +93,10 @@ backend-order-service
 │       │       │
 │       │       ├── repository
 │       │       │   └── OrderRepositoryTest.java
+│       │       │      
+│       │       ├── integration
+│       │       │   └── OrderRepositoryIntegrationTest
+│       │       │      
 │       │       │
 │       │       └── BackendOrderServiceApplicationTest.java 
 │       │
