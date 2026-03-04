@@ -15,7 +15,7 @@ The application follows <b>industry-standard layered architecture</b> (Controlle
 - CI pipeline implemented using GitHub Actions
 - Follows industry best practices for microservices and cloud readiness
 
-## Instruction (Running the Application Locally)
+## Local Setup Instructions
 
 ### 1. Prerequisites
 
@@ -31,7 +31,7 @@ Ensure the following are installed:
 ### 2. Database Setup
 
 Create a PostgreSQL database:
-```SQL
+```sql
 CREATE DATABASE orderdb;
 ```
 No manual table creation is required. The database schema is automatically managed using Liquibase during application startup.
@@ -51,18 +51,20 @@ In production environments, credentials should be managed using environment vari
 ---
 
 ### 4. Run the Application
-Build and start the application using Maven:
+Build and run the application:
 ```bash
 mvn clean install
+```
+```bash
 mvn spring-boot:run
 ```
 
 The application will start at: 
-```Plain text
+```text
 http://localhost:8082
 ```
 Swagger API documentation will be available at: 
-```Plain text
+```text
 http://localhost:8082/swagger-ui/index.html
 ```
 
@@ -88,14 +90,14 @@ Integration tests use Testcontainers, which automatically:
 - Maven
 - JUnit5
 - Liquibase
-- sonarqube
+- SonarQube
 - Swagger
 - Postman
 - Docker & Docker Compose
 - GitHub Actions
 
 ## Project Structure
-```Plain text
+```text
 backend-order-service
 │
 ├── src
@@ -180,17 +182,17 @@ Link: http://localhost:8082/swagger-ui/index.html
 
 
 ## Endpoints
-Post : http://localhost:8082/orderplace
+`POST`  http://localhost:8082/orderplace
 
 Request Body :
-```JSON
+```json
 {
   "customerId": 14,
   "description": "Medicine and Hospital equipments"
 }   
 ```
 Response Body :
-```JSON
+```json
 {
   "id": 17,
   "customerId": 14,
@@ -204,11 +206,10 @@ Example Reference:
 <img width="1819" height="957" alt="image" src="https://github.com/user-attachments/assets/f0ea0c44-c8b0-405c-bf50-9c8982587f9a" />
 
 
-Patch : http://localhost:8082/orders/26/status
+`PATCH` http://localhost:8082/orders/26/status
 
-Status Values Allowed :👇
-```Plain text
-
+Allowed Status Values:
+```text
     CREATED,
     PROCESSING,
     SHIPPED,
@@ -217,13 +218,13 @@ Status Values Allowed :👇
 ```
 
 Request Body :
-```JSON
+```json
 { 
       "status": "SHIPPED" 
 } 
 ```
 Response Body :
-```JSON
+```json
 {
   "id": 26,
   "status": "SHIPPED",
@@ -232,8 +233,8 @@ Response Body :
 ```
 
 Note:
-Provide the order ID as a path variable in the URL:
-```Plain text
+Provide the order ID as a path variable:
+```text
 http://localhost:8082/orders/{Place order Id here}/status
 ```
 Example Reference:
@@ -242,45 +243,45 @@ Example Reference:
 <img width="1815" height="930" alt="image" src="https://github.com/user-attachments/assets/8d85497b-eb72-4b88-b8dd-eb61bad5fd59" />
 
 
-Get : http://localhost:8082/order?id=17
+`GET`  http://localhost:8082/order?id=17
 
 Request Body :
-```JSON
+```json
       
 ```
 
 Response Body :
-```JSON
+```json
 {
   "id": 17,
   "customerId": 14,
-  "description": "Medicine and Hospital equipments",
+  "description": "Medicine and Hospital Equipment",
   "status": "CREATED"
 }    
 ```
 
 Note:
 To retrieve a specific order, provide the id query parameter: 
-```Plain text
+```text
 http://localhost:8082/order?id={specific order id here}
 ```
 Example Reference:
 
 <img width="1816" height="923" alt="image" src="https://github.com/user-attachments/assets/cb4674e7-0a76-4fe6-9876-938922c6f0e0" />
 
-Delete : http://localhost:8082/order/remove/17
+`DELETE` http://localhost:8082/order/remove/17
 
 Request Body :
-```JSON
+```json
       
 ```
 Response Body :
-```JSON
+```json
       
 ```
 Note:
 Provide the order ID as a path variable to delete the order:
-```Plain text
+```text
 http://localhost:8082/order/remove/{Place order Id here}
 ```
 
