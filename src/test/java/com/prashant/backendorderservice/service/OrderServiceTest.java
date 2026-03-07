@@ -48,16 +48,20 @@ class OrderServiceTest {
         savedOrder.setId(1L);
         savedOrder.setCustomerId(123L);
         savedOrder.setDescription("Test Order");
+        savedOrder.setStatus(OrderStatus.CREATED);
 
         when(orderRepository.save(any(Order.class)))
                 .thenReturn(savedOrder);
 
         // Act
-        Long orderId = orderService.createOrder(request);
+        OrderResponse orderResponse = orderService.createOrder(request);
 
         // Assert
-        assertNotNull(orderId);
-        assertEquals(1L, orderId);
+        assertNotNull(orderResponse);
+        assertEquals(1L, orderResponse.getId());
+        assertEquals(123L, orderResponse.getCustomerId());
+        assertEquals("Test Order", orderResponse.getDescription());
+        assertEquals("CREATED", orderResponse.getStatus());
 
         verify(orderRepository, times(1)).save(any(Order.class));
     }

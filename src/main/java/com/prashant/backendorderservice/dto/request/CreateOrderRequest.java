@@ -17,4 +17,6 @@ public class CreateOrderRequest {
     @Schema(example = "iPhone 15 Pro")
     @NotBlank
     private String description;
+
+    private String status;
 }

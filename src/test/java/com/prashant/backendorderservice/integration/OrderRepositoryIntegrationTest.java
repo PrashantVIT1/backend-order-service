@@ -45,6 +45,7 @@ class OrderRepositoryIntegrationTest {
         Order order = new Order();
         order.setCustomerId(1L);
         order.setDescription("MacBook");
+        order.setStatus(OrderStatus.CREATED);
 
         Order saved = orderRepository.saveAndFlush(order);
         assertThat(saved.getId()).isNotNull();
@@ -56,6 +57,7 @@ class OrderRepositoryIntegrationTest {
         Order order = new Order();
         order.setCustomerId(1L);
         order.setDescription("MacBook");
+        order.setStatus(OrderStatus.CREATED);
 
         Order saved = orderRepository.saveAndFlush(order);
 
@@ -74,6 +76,7 @@ class OrderRepositoryIntegrationTest {
         Order order = new Order();
         order.setCustomerId(1L);
         order.setDescription("MacBook");
+        order.setStatus(OrderStatus.CREATED);
 
         Order saved = orderRepository.saveAndFlush(order);
 
@@ -92,6 +95,7 @@ class OrderRepositoryIntegrationTest {
         Order order = new Order();
         order.setCustomerId(1L);
         order.setDescription("MacBook");
+        order.setStatus(OrderStatus.CREATED);
         Order saved = orderRepository.saveAndFlush(order);
         orderRepository.deleteById(saved.getId());
         orderRepository.flush();
@@ -107,10 +111,12 @@ class OrderRepositoryIntegrationTest {
         Order order1 = new Order();
         order1.setCustomerId(1L);
         order1.setDescription("MacBook");
+        order1.setStatus(OrderStatus.CREATED);
 
         Order order2 = new Order();
         order2.setCustomerId(2L);
         order2.setDescription("Books");
+        order2.setStatus(OrderStatus.CREATED);
 
         orderRepository.saveAllAndFlush(List.of(order1, order2));
 
@@ -124,7 +130,6 @@ class OrderRepositoryIntegrationTest {
                 .extracting(Order::getDescription)
                 .containsExactlyInAnyOrder("MacBook", "Books");
     }
-    
 
 }
 
