@@ -6,10 +6,13 @@ import com.prashant.backendorderservice.dto.response.OrderResponse;
 import com.prashant.backendorderservice.dto.response.UpdateOrderStatusResponse;
 import com.prashant.backendorderservice.exception.OrderNotFoundException;
 import com.prashant.backendorderservice.model.Order;
+import com.prashant.backendorderservice.model.OrderStatus;
 import com.prashant.backendorderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+
+import static com.prashant.backendorderservice.model.OrderStatus.CREATED;
 
 
 @Service
@@ -18,13 +21,24 @@ public class OrderService implements OrderServiceOperations{
 
     private final OrderRepository orderRepository;
 
-    public Long createOrder(CreateOrderRequest request) {
+    public OrderResponse createOrder(CreateOrderRequest request) {
         Order order = new Order();
         order.setCustomerId(request.getCustomerId());
         order.setDescription(request.getDescription());
 
+        OrderStatus status = OrderStatus.CREATED;
+        if (request.getStatus() != null) {
+            status = OrderStatus.valueOf(request.getStatus().toUpperCase());
+        }
+        order.setStatus(status);
+
         Order savedOrder = orderRepository.save(order);
-        return savedOrder.getId();
+        return OrderResponse.builder()
+                .id(savedOrder.getId())
+                .customerId(savedOrder.getCustomerId())
+                .description(savedOrder.getDescription())
+                .status(savedOrder.getStatus().name())
+                .build();
     }
 
     public UpdateOrderStatusResponse updateOrderStatusbyId(Long id, UpdateOrderStatusRequest request){

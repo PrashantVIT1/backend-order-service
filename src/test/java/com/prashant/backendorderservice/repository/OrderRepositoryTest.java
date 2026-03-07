@@ -29,6 +29,7 @@ class OrderRepositoryTest {
         Order order = new Order();
         order.setCustomerId(123L);
         order.setDescription("iPhone 15");
+        order.setStatus(OrderStatus.CREATED);
 
         // When
         Order savedOrder = orderRepository.save(order);
@@ -50,10 +51,12 @@ class OrderRepositoryTest {
         Order order1 = new Order();
         order1.setCustomerId(123L);
         order1.setDescription("iPhone 15");
+        order1.setStatus(OrderStatus.CREATED);
 
         Order order2 = new Order();
         order2.setCustomerId(2L);
         order2.setDescription("Mobile");
+        order2.setStatus(OrderStatus.CREATED);
 
         orderRepository.save(order1);
         orderRepository.save(order2);
@@ -69,10 +72,12 @@ class OrderRepositoryTest {
         Order order1 = new Order();
         order1.setCustomerId(123L);
         order1.setDescription("iPhone 15");
+        order1.setStatus(OrderStatus.CREATED);
 
         Order order2 = new Order();
         order2.setCustomerId(2L);
         order2.setDescription("Mobile");
+        order2.setStatus(OrderStatus.CREATED);
 
         orderRepository.saveAll(List.of(order1, order2));
         orderRepository.flush();
@@ -89,6 +94,7 @@ class OrderRepositoryTest {
         Order order = new Order();
         order.setCustomerId(123L);
         order.setDescription(null);
+        order.setStatus(OrderStatus.CREATED);
 
         orderRepository.save(order);
 

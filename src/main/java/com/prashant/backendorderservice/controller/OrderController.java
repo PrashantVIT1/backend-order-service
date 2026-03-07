@@ -34,8 +34,8 @@ public class OrderController {
                     responseCode = "201",
                     description = "Order created successfully",
                     content = @Content(
-                            mediaType = "text/plain",
-                            schema = @Schema(example = "Order created with id: 101")
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = OrderResponse.class)
                     )
             ),
             @ApiResponse(
@@ -48,13 +48,12 @@ public class OrderController {
             )
     })
     @PostMapping("orderplace")
-    public ResponseEntity<String> createOrder(
+    public ResponseEntity<OrderResponse> createOrder(
             @Valid @RequestBody CreateOrderRequest request
     ) {
-        Long orderId = orderService.createOrder(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body("Order created with id: " + orderId);
+                .body(orderService.createOrder(request));
     }
 
     // ================= UPDATE ORDER STATUS =================

@@ -45,14 +45,24 @@ class OrderControllerTest {
         request.setDescription("Laptop");
         request.setCustomerId(1L);
 
+        OrderResponse response = OrderResponse.builder()
+                .id(1L)
+                .customerId(1L)
+                .description("Laptop")
+                .status("CREATED").build();
+
+
         when(orderService.createOrder(any()))
-                .thenReturn(101L);
+                .thenReturn(response);
 
         mockMvc.perform(post("/orderplace")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Order created with id: 101"));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.customerId").value(1))
+                .andExpect(jsonPath("$.description").value("Laptop"))
+                .andExpect(jsonPath("$.status").value("CREATED"));
 
         verify(orderService).createOrder(any(CreateOrderRequest.class));
         verifyNoMoreInteractions(orderService);
