@@ -14,7 +14,7 @@ The application follows **industry-standard layered architecture** (Controller, 
 - [Local Setup Instructions](#local-setup-instructions)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
-- [CI/CD Workflow](#ci-cd-workflow)
+- [CI/CD Workflow](#cicd-workflow)
 - [Swagger API Documentation](#swagger-api-documentation)
 - [Endpoints](#endpoints)
 - [Future Improvements](#future-improvements)
