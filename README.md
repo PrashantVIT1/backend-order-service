@@ -1,19 +1,87 @@
-# Backend Order Service
+# Backend Order Service 
+![Java](https://img.shields.io/badge/Java-17-blue)  ![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-brightgreen)  ![Build](https://img.shields.io/github/actions/workflow/status/PrashantVIT1/backend-order-service/maven.yml)  [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) ![Docker](https://img.shields.io/badge/Docker-enabled-blue)
 
-A production-ready <b>Spring Boot microservice</b> responsible for managing order lifecycle operations in a microservices architecture. The service exposes RESTful APIs for creating, updating, retrieving, and deleting orders, and is fully <b>containerized using Docker</b> to ensure consistency across development, testing, and deployment environments.
+A production-ready **Spring Boot microservice** designed to manage the lifecycle of orders in a distributed microservices architecture.  
+The service exposes RESTful APIs for creating, updating, retrieving, and deleting orders, and is fully **containerized using Docker** to ensure consistent behavior across development, testing, and deployment environments.
 
-The application follows <b>industry-standard layered architecture</b> (Controller, Service, Repository) and is designed to be easily extensible for database integration, security, and cloud deployment. CI pipelines are configured using <b>GitHub Actions</b> to automate builds and ensure code quality.
+The application follows **industry-standard layered architecture** (Controller, Service, Repository) and is designed to be easily extensible for database integration, security, and cloud deployment. CI pipelines are configured using **GitHub Actions** to automate builds and ensure code quality.
 
-##  Key Highlights
+## Table of Contents
 
-- RESTful APIs developed using Spring Boot
-- Clean, scalable, company-grade layered architecture
-- DTO-based design for clear separation between API and domain models
-- PostgreSQL persistence (easy to switch to MySQL)
-- Dockerized application for containerized deployment
-- Docker Compose support for multi-service environments
-- CI pipeline implemented using GitHub Actions
-- Follows industry best practices for microservices and cloud readiness
+- [Architecture Overview](#architecture-overview)
+- [System Design Considerations](#system-design-considerations)
+- [Key Highlights](#key-highlights)
+- [Local Setup Instructions](#local-setup-instructions)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [CI/CD Workflow](#ci-cd-workflow)
+- [Swagger API Documentation](#swagger-api-documentation)
+- [Endpoints](#endpoints)
+- [Future Improvements](#future-improvements)
+- [License](#license)
+
+## Architecture Overview
+
+```mermaid
+graph TD
+    Client[Client / API Consumer]
+
+    subgraph API Layer
+        Controller[Order Controller]
+        DTO[DTOs - Request / Response]
+    end
+
+    subgraph Business Layer
+        Service[Order Service]
+    end
+
+    subgraph Data Layer
+        Repository[Order Repository]
+        DB[(PostgreSQL Database)]
+    end
+
+    Client -->|HTTP Request| Controller
+    Controller -->|Request DTO| DTO
+    DTO -->|Validated Data| Service
+    Service -->|JPA Calls| Repository
+    Repository -->|SQL Queries| DB
+    Service -->|Response DTO| DTO
+    DTO -->|HTTP Response| Client
+```
+
+The service follows a standard layered architecture:
+
+- **Controller Layer**  
+  Handles incoming HTTP requests and delegates processing to the service layer.
+
+- **DTO Layer**  
+  Defines request and response objects used to transfer data between the API layer and business layer.
+
+- **Service Layer**  
+  Contains the core business logic and orchestrates application workflows.
+
+- **Repository Layer**  
+  Manages persistence and database interaction using Spring Data JPA.
+
+## System Design Considerations
+
+- **Stateless Service** – allows horizontal scaling in containerized environments.
+- **DTO Layer** – prevents domain model leakage through API contracts.
+- **Liquibase Migrations** – ensures consistent database schema evolution.
+- **Testcontainers Integration Tests** – guarantees realistic database testing.
+- **CI Pipeline** – ensures build reliability and automated validation.
+
+## Key Highlights
+
+- RESTful APIs built with Spring Boot
+- Clean layered architecture (Controller, Service, Repository)
+- DTO-based API design for clear separation of concerns
+- PostgreSQL persistence with Liquibase database migrations
+- Containerized deployment using Docker
+- Integration testing using Testcontainers
+- CI pipeline implemented with GitHub Actions
+- OpenAPI/Swagger documentation for API exploration
+- Designed following microservices and cloud-ready best practices
 
 ## Local Setup Instructions
 
@@ -24,7 +92,7 @@ Ensure the following are installed:
 - Java 17  
 - Maven  
 - PostgreSQL  
-- Docker (required only for integration tests via Testcontainers)
+- Docker (required for running integration tests using Testcontainers)
 
 ---
 
@@ -34,7 +102,7 @@ Create a PostgreSQL database:
 ```sql
 CREATE DATABASE orderdb;
 ```
-No manual table creation is required. The database schema is automatically managed using Liquibase during application startup.
+No manual table creation is required. The database schema is automatically managed through Liquibase migrations during application startup.
 
 ---
 
@@ -85,16 +153,20 @@ Integration tests use Testcontainers, which automatically:
 - Docker must be running locally for integration tests to execute successfully.
 
 ## Tech Stack:
-- Java 17
-- Spring Boot
-- Maven
-- JUnit5
-- Liquibase
-- SonarQube
-- Swagger
-- Postman
-- Docker & Docker Compose
-- GitHub Actions
+| Category           | Technology             |
+| ------------------ | ---------------------- |
+| Language           | Java 17                |
+| Framework          | Spring Boot            |
+| Build Tool         | Maven                  |
+| Database           | PostgreSQL             |
+| Testing            | JUnit5, Testcontainers |
+| API Documentation  | Swagger / OpenAPI      |
+| Database Migration | Liquibase              |
+| Containerization   | Docker, Docker Compose |
+| CI/CD              | GitHub Actions         |
+| Code Quality       | SonarQube              |
+| API Testing        | Postman                |
+
 
 ## Project Structure
 ```text
@@ -157,7 +229,7 @@ backend-order-service
 │       │       │   └── OrderRepositoryTest.java
 │       │       │      
 │       │       ├── integration
-│       │       │   └── OrderRepositoryIntegrationTest
+│       │       │   └── OrderRepositoryIntegrationTest.java
 │       │       │      
 │       │       │
 │       │       └── BackendOrderServiceApplicationTest.java 
@@ -171,42 +243,63 @@ backend-order-service
 ```
 ## CI/CD Workflow
 
-<img width="990" height="604" alt="image" src="https://github.com/user-attachments/assets/3ca6d4d6-d0b2-4325-908f-528656597ff7" />
+<p align="center">
+  <img width="1000" alt="CI/CD Workflow" src="https://github.com/user-attachments/assets/3ca6d4d6-d0b2-4325-908f-528656597ff7"/>
+</p>
+
+Continuous Integration is implemented using GitHub Actions. The pipeline automatically:
+
+- Builds the application
+- Executes unit and integration tests
+- Performs static code analysis
+- Ensures code quality before merging changes
 
 ## Swagger API documentation
 
-Link: http://localhost:8082/swagger-ui/index.html
+Swagger UI: [http://localhost:8082/swagger-ui/index.html](http://localhost:8082/swagger-ui/index.html)
 
-
-<img width="1901" height="867" alt="image" src="https://github.com/user-attachments/assets/70819900-adbd-4fec-bbfa-a3ebd5caf365" />
-
+<p align="center">
+  <img width="1000" height = "600" alt="Swagger API documentation" src="https://github.com/user-attachments/assets/22a02eac-b98d-46a6-b341-0736fd3bba1f" />
+</p>
 
 ## Endpoints
-`POST`  http://localhost:8082/orderplace
+
+| Method | Endpoint            | Status Code | Description              |
+|--------|---------------------|:-----------:|--------------------------|
+| POST   | /orders             | 201         | Create a new order       |
+| PATCH  | /orders/{id}/status | 200         | Update order status      |
+| GET    | /orders/{id}        | 200         | Retrieve an order by ID  |
+| DELETE | /orders/{id}        | 204         | Delete an order          |
+
+
+`POST`  http://localhost:8082/orders
 
 Request Body :
 ```json
 {
   "customerId": 14,
-  "description": "Medicine and Hospital equipments"
+  "description": "Medicine and Hospital Equipment",
+  "status": "CREATED"
 }   
 ```
+Status Code: `201`
+
 Response Body :
 ```json
 {
-  "id": 17,
+  "id": 15,
   "customerId": 14,
-  "description": "Medicine and Hospital equipments",
+  "description": "Medicine and Hospital Equipment",
   "status": "CREATED"
 }    
 ```
 
-Example Reference:  
+Example Reference:
+<p align="center">
+  <img width="1000" alt="POST method Postman" src="https://github.com/user-attachments/assets/42b6f1c5-fd61-438d-971c-404f043a2255" />
+</p>
 
-<img width="1819" height="957" alt="image" src="https://github.com/user-attachments/assets/f0ea0c44-c8b0-405c-bf50-9c8982587f9a" />
-
-
-`PATCH` http://localhost:8082/orders/26/status
+`PATCH` http://localhost:8082/orders/{id}/status
 
 Allowed Status Values:
 ```text
@@ -223,72 +316,74 @@ Request Body :
       "status": "SHIPPED" 
 } 
 ```
+Status Code: `200`
+
 Response Body :
 ```json
 {
-  "id": 26,
+  "id": 15,
   "status": "SHIPPED",
   "updatedAt": "2026-02-06T17:28:06.2548106"
 }   
 ```
 
-Note:
-Provide the order ID as a path variable:
-```text
-http://localhost:8082/orders/{Place order Id here}/status
-```
 Example Reference:
 
+<p align="center">
+  <img width="1000" alt="PATCH method Postman" src="https://github.com/user-attachments/assets/46e9f47a-ee47-4a8f-8e1f-cfb89ed824bd" />
+</p>
 
-<img width="1815" height="930" alt="image" src="https://github.com/user-attachments/assets/8d85497b-eb72-4b88-b8dd-eb61bad5fd59" />
 
-
-`GET`  http://localhost:8082/order?id=17
+`GET`  http://localhost:8082/orders/{id}
 
 Request Body :
 ```json
       
 ```
+Status Code: `200`
 
 Response Body :
 ```json
 {
-  "id": 17,
+  "id": 15,
   "customerId": 14,
   "description": "Medicine and Hospital Equipment",
   "status": "CREATED"
 }    
 ```
 
-Note:
-To retrieve a specific order, provide the id query parameter: 
-```text
-http://localhost:8082/order?id={specific order id here}
-```
 Example Reference:
 
-<img width="1816" height="923" alt="image" src="https://github.com/user-attachments/assets/cb4674e7-0a76-4fe6-9876-938922c6f0e0" />
+<p align="center">
+  <img width="1000" alt="image" src="https://github.com/user-attachments/assets/0b4a1722-adc4-4467-b938-84d95275457d" />
+</p>
 
-`DELETE` http://localhost:8082/order/remove/17
+`DELETE` http://localhost:8082/orders/{id}
 
 Request Body :
 ```json
       
 ```
+Status Code: `204`
+
 Response Body :
 ```json
       
 ```
-Note:
-Provide the order ID as a path variable to delete the order:
-```text
-http://localhost:8082/order/remove/{Place order Id here}
-```
 
 Example Reference:
 
-<img width="1817" height="927" alt="image" src="https://github.com/user-attachments/assets/f1f90ea2-4939-4ca2-bf9d-dc4bb5d8bc98" />
+<p align="center">
+  <img width="1000" alt="DELETE method Postman" src="https://github.com/user-attachments/assets/99987431-092c-4687-adc7-ed6f3b5a8d75" />
+</p>
 
+## Future Improvements
+
+- Add authentication and authorization using Spring Security
+- Introduce distributed tracing using OpenTelemetry
+- Implement event-driven communication using Kafka
+- Deploy using Kubernetes for scalable container orchestration
+- Add caching using Redis for improved performance
 
 ## License
 
