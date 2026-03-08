@@ -55,7 +55,7 @@ class OrderControllerTest {
         when(orderService.createOrder(any()))
                 .thenReturn(response);
 
-        mockMvc.perform(post("/orderplace")
+        mockMvc.perform(post("/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -90,6 +90,7 @@ class OrderControllerTest {
         mockMvc.perform(patch("/orders/1/status")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.status").value("SHIPPED"));
 
@@ -113,8 +114,8 @@ void shouldReturnOrderWhenExists() throws Exception {
     when(orderService.getOrderById(1L))
             .thenReturn(response);
 
-    mockMvc.perform(get("/order")
-                    .param("id", "1"))
+    mockMvc.perform(get("/orders/1"))
+            .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(1))
             .andExpect(jsonPath("$.description").value("Laptop"));
@@ -130,8 +131,7 @@ void shouldReturnOrderWhenExists() throws Exception {
         when(orderService.getOrderById(1L))
                 .thenThrow(new OrderNotFoundException(1L));
 
-        mockMvc.perform(get("/order")
-                        .param("id", "1"))
+        mockMvc.perform(get("/orders/1"))
                 .andExpect(status().isNotFound());
 
         verify(orderService).getOrderById(1L);
@@ -145,7 +145,7 @@ void shouldReturnOrderWhenExists() throws Exception {
 
         doNothing().when(orderService).deleteOrderById(1L);
 
-        mockMvc.perform(delete("/order/remove/1"))
+        mockMvc.perform(delete("/orders/1"))
                 .andExpect(status().isNoContent());
 
         verify(orderService).deleteOrderById(1L);
@@ -158,7 +158,7 @@ void shouldReturnOrderWhenExists() throws Exception {
         doThrow(new OrderNotFoundException(1L))
                 .when(orderService).deleteOrderById(1L);
 
-        mockMvc.perform(delete("/order/remove/1"))
+        mockMvc.perform(delete("/orders/1"))
                 .andExpect(status().isNotFound());
 
         verify(orderService).deleteOrderById(1L);

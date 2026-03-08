@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Orders", description = "Order management APIs")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -47,7 +47,7 @@ public class OrderController {
                     )
             )
     })
-    @PostMapping("orderplace")
+    @PostMapping
     public ResponseEntity<OrderResponse> createOrder(
             @Valid @RequestBody CreateOrderRequest request
     ) {
@@ -77,7 +77,7 @@ public class OrderController {
                     )
             )
     })
-    @PatchMapping("orders/{id}/status")
+    @PatchMapping("{id}/status")
     public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(
             @PathVariable Long id,
             @Valid @RequestBody UpdateOrderStatusRequest request
@@ -108,8 +108,8 @@ public class OrderController {
                     )
             )
     })
-    @GetMapping("order")
-    public ResponseEntity<OrderResponse> getOrderById(@RequestParam Long id) {
+    @GetMapping("{id}")
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
@@ -130,7 +130,7 @@ public class OrderController {
                     )
             )
     })
-    @DeleteMapping("order/remove/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
         orderService.deleteOrderById(id);
         return ResponseEntity.noContent().build();
