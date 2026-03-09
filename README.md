@@ -19,6 +19,8 @@ The application follows **industry-standard layered architecture** (Controller, 
 - [Endpoints](#endpoints)
 - [Future Improvements](#future-improvements)
 - [License](#license)
+  
+> If on click 500 status page appers then `refresh` the 500 status page. It will work.
 
 ## Architecture Overview
 
