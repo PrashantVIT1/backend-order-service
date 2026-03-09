@@ -102,7 +102,7 @@ Ensure the following are installed:
 
 Create a PostgreSQL database:
 ```sql
-CREATE DATABASE orderdb;
+  CREATE DATABASE orderdb;
 ```
 No manual table creation is required. The database schema is automatically managed through Liquibase migrations during application startup.
 
@@ -110,10 +110,10 @@ No manual table creation is required. The database schema is automatically manag
 
 ### 3. Configure Database Credentials
 ```properties
-Update your application.properties file:
-spring.datasource.url=jdbc:postgresql://localhost:5432/orderdb
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+  Update your application.properties file:
+  spring.datasource.url=jdbc:postgresql://localhost:5432/orderdb
+  spring.datasource.username=your_username
+  spring.datasource.password=your_password
 ```
 
 In production environments, credentials should be managed using environment variables or a secrets management service instead of hardcoding values.
@@ -123,19 +123,19 @@ In production environments, credentials should be managed using environment vari
 ### 4. Run the Application
 Build and run the application:
 ```bash
-mvn clean install
+  mvn clean install
 ```
 ```bash
-mvn spring-boot:run
+  mvn spring-boot:run
 ```
 
 The application will start at: 
 ```text
-http://localhost:8082
+  http://localhost:8082
 ```
 Swagger API documentation will be available at: 
 ```text
-http://localhost:8082/swagger-ui/index.html
+  http://localhost:8082/swagger-ui/index.html
 ```
 
 ---
@@ -146,7 +146,6 @@ To execute all unit and integration tests:
 ```bash
   mvn test
 ```
-
 Integration tests use Testcontainers, which automatically:
 
 - Spins up a PostgreSQL Docker container
