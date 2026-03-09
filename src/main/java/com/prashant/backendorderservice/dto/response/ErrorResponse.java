@@ -22,7 +22,7 @@ public class ErrorResponse {
     private String error;
     @Schema(example = "Order not found with id: 32")
     private String message;
-    @Schema(example = "/order/remove/32")
+    @Schema(example = "/order/32")
     private String path;
 }
 
