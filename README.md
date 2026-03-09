@@ -205,8 +205,11 @@ backend-order-service
 │   │   │       │   ├── OrderNotFoundException.java        
 │   │   │       │   └── GlobalExceptionHandler.java
 │   │   │       │
-│   │   │       ├── config      
+│   │   │       ├── config
+│   │   │       │   ├── swagger
+│   │   │       │   │   └── OrderControllerDocs.java
 │   │   │       │   └── OpenApiConfig.java
+│   │   │       │
 │   │   │       └── BackendOrderServiceApplication.java
 │   │   │
 │   │   └── resources
@@ -263,6 +266,19 @@ Swagger UI: [http://localhost:8082/swagger-ui/index.html](http://localhost:8082/
 </p>
 
 ## Endpoints
+### Error Response Format
+
+All error responses follow a consistent structure for example:
+```json
+{
+  "timestamp": "2026-03-09T10:15:30",
+  "status": 400,
+  "error": "INVALID_ENUM_VALUE",
+  "message": "Valid Order Status : CREATED, PROCESSING, SHIPPED, COMPLETED, CANCELLED",
+  "path": "/orders/15/status"
+}
+```
+### In Detail
 
 | Method | Endpoint            | Status Code | Description              |
 |--------|---------------------|:-----------:|--------------------------|
@@ -282,7 +298,10 @@ Request Body :
   "status": "CREATED"
 }   
 ```
-Status Code: `201`
+| Status Code | Reason |
+|:-----------:|--------|
+| `201` | Order created successfully |
+| `400` | Invalid request body / missing required fields |
 
 Response Body :
 ```json
@@ -293,6 +312,7 @@ Response Body :
   "status": "CREATED"
 }    
 ```
+> `status` is optional. Defaults to `CREATED` if not provided.
 
 Example Reference:
 <p align="center">
@@ -316,7 +336,11 @@ Request Body :
       "status": "SHIPPED" 
 } 
 ```
-Status Code: `200`
+| Status Code | Reason |
+|:-----------:|--------|
+| `200` | Status updated successfully |
+| `400` | Invalid status value |
+| `404` | Order not found with given ID |
 
 Response Body :
 ```json
@@ -336,11 +360,10 @@ Example Reference:
 
 `GET`  http://localhost:8082/orders/{id}
 
-Request Body :
-```json
-      
-```
-Status Code: `200`
+| Status Code | Reason |
+|:-----------:|--------|
+| `200` | Order retrieved successfully |
+| `404` | Order not found with given ID |
 
 Response Body :
 ```json
@@ -361,15 +384,17 @@ Example Reference:
 `DELETE` http://localhost:8082/orders/{id}
 
 Request Body :
-```json
-      
-```
-Status Code: `204`
+
+| Status Code | Reason |
+|:-----------:|--------|
+| `204` | Order deleted successfully |
+| `404` | Order not found with given ID |
 
 Response Body :
 ```json
       
 ```
+> `Response Body` is empty if no error.
 
 Example Reference:
 
