@@ -144,7 +144,7 @@ http://localhost:8082/swagger-ui/index.html
 
 To execute all unit and integration tests:
 ```bash
-mvn test
+  mvn test
 ```
 
 Integration tests use Testcontainers, which automatically:
