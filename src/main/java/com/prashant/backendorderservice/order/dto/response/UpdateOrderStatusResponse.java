@@ -1,0 +1,22 @@
+package com.prashant.backendorderservice.order.dto.response;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Builder
+public class UpdateOrderStatusResponse {
+
+    @Schema(example = "1")
+    private Long id;
+    @Schema(example = "PROCESSING")
+    private String status;
+    @Schema(example = "2026-02-05T06:01:28.829Z")
+    private LocalDateTime updatedAt;
+}
