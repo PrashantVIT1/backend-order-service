@@ -1,8 +1,7 @@
 package com.prashant.backendorderservice.orders.repository;
 
-import com.prashant.backendorderservice.order.entity.Order;
-import com.prashant.backendorderservice.order.entity.OrderStatus;
-import com.prashant.backendorderservice.order.repository.OrderRepository;
+import com.prashant.backendorderservice.orders.entity.Order;
+import com.prashant.backendorderservice.orders.entity.OrderStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

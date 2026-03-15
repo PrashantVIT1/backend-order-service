@@ -1,0 +1,21 @@
+package com.prashant.backendorderservice.orders.dto.response;
+
+import com.prashant.backendorderservice.orders.entity.OrderStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+public class OrderResponse {
+    @Schema(example = "1")
+    private Long id;
+    @Schema(example = "123")
+    private Long customerId;
+    @Schema(example = "iPhone 15 Pro")
+    private String description;
+    @Schema(example = "CREATED")
+    private OrderStatus status;
+}
