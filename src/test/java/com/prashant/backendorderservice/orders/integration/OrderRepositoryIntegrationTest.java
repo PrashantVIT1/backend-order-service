@@ -1,11 +1,12 @@
 package com.prashant.backendorderservice.orders.integration;
 
 
-import com.prashant.backendorderservice.order.entity.Order;
-import com.prashant.backendorderservice.order.entity.OrderStatus;
-import com.prashant.backendorderservice.order.repository.OrderRepository;
+import com.prashant.backendorderservice.orders.entity.Order;
+import com.prashant.backendorderservice.orders.entity.OrderStatus;
+import com.prashant.backendorderservice.orders.repository.OrderRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -39,6 +40,11 @@ class OrderRepositoryIntegrationTest {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @BeforeEach
+    void setUp() {
+        orderRepository.deleteAll();
+    }
 
     @Test
     void shouldSaveOrder() {

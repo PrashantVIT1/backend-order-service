@@ -1,19 +1,22 @@
 package com.prashant.backendorderservice.orders.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prashant.backendorderservice.order.controller.OrderController;
-import com.prashant.backendorderservice.order.dto.request.CreateOrderRequest;
-import com.prashant.backendorderservice.order.dto.request.UpdateOrderStatusRequest;
-import com.prashant.backendorderservice.order.dto.response.OrderResponse;
-import com.prashant.backendorderservice.order.dto.response.UpdateOrderStatusResponse;
-import com.prashant.backendorderservice.order.exception.OrderNotFoundException;
-import com.prashant.backendorderservice.order.entity.OrderStatus;
-import com.prashant.backendorderservice.order.service.OrderService;
+import com.prashant.backendorderservice.auth.config.WebSecurityConfig;
+import com.prashant.backendorderservice.orders.dto.request.CreateOrderRequest;
+import com.prashant.backendorderservice.orders.dto.request.UpdateOrderStatusRequest;
+import com.prashant.backendorderservice.orders.dto.response.OrderResponse;
+import com.prashant.backendorderservice.orders.dto.response.UpdateOrderStatusResponse;
+import com.prashant.backendorderservice.orders.exception.custom.OrderNotFoundException;
+import com.prashant.backendorderservice.orders.entity.OrderStatus;
+import com.prashant.backendorderservice.orders.service.OrderService;
+import com.prashant.backendorderservice.auth.support.SecuredControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -26,7 +29,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(OrderController.class)
-class OrderControllerTest {
+@Import(WebSecurityConfig.class)
+@WithMockUser
+class OrderControllerTest extends SecuredControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,7 +55,7 @@ class OrderControllerTest {
                 .id(1L)
                 .customerId(1L)
                 .description("Laptop")
-                .status("CREATED").build();
+                .status(OrderStatus.CREATED).build();
 
 
         when(orderService.createOrder(any()))
@@ -79,7 +84,7 @@ class OrderControllerTest {
 
         UpdateOrderStatusResponse response = UpdateOrderStatusResponse.builder()
                 .id(1L)
-                .status("SHIPPED")
+                .status(OrderStatus.SHIPPED)
                 .updatedAt(LocalDateTime.now())
                 .build();
 
@@ -109,7 +114,7 @@ void shouldReturnOrderWhenExists() throws Exception {
             .id(1L)
             .customerId(1L)
             .description("Laptop")
-            .status("SHIPPED").build();
+            .status(OrderStatus.SHIPPED).build();
 
 
     when(orderService.getOrderById(1L))

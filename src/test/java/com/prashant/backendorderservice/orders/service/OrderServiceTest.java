@@ -1,14 +1,13 @@
 package com.prashant.backendorderservice.orders.service;
 
-import com.prashant.backendorderservice.order.dto.request.CreateOrderRequest;
-import com.prashant.backendorderservice.order.dto.request.UpdateOrderStatusRequest;
-import com.prashant.backendorderservice.order.dto.response.OrderResponse;
-import com.prashant.backendorderservice.order.dto.response.UpdateOrderStatusResponse;
-import com.prashant.backendorderservice.order.entity.Order;
-import com.prashant.backendorderservice.order.entity.OrderStatus;
-import com.prashant.backendorderservice.order.repository.OrderRepository;
+import com.prashant.backendorderservice.orders.dto.request.CreateOrderRequest;
+import com.prashant.backendorderservice.orders.dto.request.UpdateOrderStatusRequest;
+import com.prashant.backendorderservice.orders.dto.response.OrderResponse;
+import com.prashant.backendorderservice.orders.dto.response.UpdateOrderStatusResponse;
+import com.prashant.backendorderservice.orders.entity.Order;
+import com.prashant.backendorderservice.orders.entity.OrderStatus;
+import com.prashant.backendorderservice.orders.repository.OrderRepository;
 
-import com.prashant.backendorderservice.order.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -62,7 +61,7 @@ class OrderServiceTest {
         assertEquals(1L, orderResponse.getId());
         assertEquals(123L, orderResponse.getCustomerId());
         assertEquals("Test Order", orderResponse.getDescription());
-        assertEquals("CREATED", orderResponse.getStatus());
+        assertEquals(OrderStatus.CREATED, orderResponse.getStatus());
 
         verify(orderRepository, times(1)).save(any(Order.class));
     }
@@ -81,7 +80,7 @@ class OrderServiceTest {
 
         UpdateOrderStatusResponse response = orderService.updateOrderStatusbyId(1L, request);
 
-        assertEquals("SHIPPED", response.getStatus());
+        assertEquals(OrderStatus.SHIPPED, response.getStatus());
         verify(orderRepository).save(order);
     }
     @Test
@@ -98,7 +97,7 @@ class OrderServiceTest {
         OrderResponse response = orderService.getOrderById(1L);
 
         assertEquals(1L, response.getId());
-        assertEquals("CREATED", response.getStatus());
+        assertEquals(OrderStatus.CREATED, response.getStatus());
     }
 
     @Test
