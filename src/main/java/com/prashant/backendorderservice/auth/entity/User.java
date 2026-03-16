@@ -1,6 +1,7 @@
 package com.prashant.backendorderservice.auth.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -22,9 +23,12 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @NotBlank
     private String username;
 
+    @NotBlank
+    @Column(nullable = false)
     private String password;
 
     @Builder.Default

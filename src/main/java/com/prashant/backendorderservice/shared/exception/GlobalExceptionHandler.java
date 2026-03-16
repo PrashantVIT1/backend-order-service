@@ -1,6 +1,9 @@
 package com.prashant.backendorderservice.shared.exception;
 
+import com.prashant.backendorderservice.shared.config.swagger.GlobalExceptionHandlerDocs;
 import com.prashant.backendorderservice.shared.dto.ErrorResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
@@ -15,7 +18,7 @@ import java.time.LocalDateTime;
 @Slf4j
 @RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE)  // always last resort
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler implements GlobalExceptionHandlerDocs {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(

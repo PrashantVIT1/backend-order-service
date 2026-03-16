@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
                 description = "Local Development Server"
         ),
         security = @SecurityRequirement(name = "bearerAuth")
+
 )
 @SecurityScheme(
         name = "bearerAuth",
@@ -46,4 +47,14 @@ public class OpenApiConfig {
                 .pathsToMatch("/orders/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi allApi() {
+        return GroupedOpenApi.builder()
+                .group("allApi")
+                .pathsToMatch("/**")
+                .build();
+    }
+
+
 }

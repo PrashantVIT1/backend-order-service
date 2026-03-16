@@ -1,8 +1,8 @@
 package com.prashant.backendorderservice.auth.service;
 
-import com.prashant.backendorderservice.auth.dto.request.LoginRequestDto;
-import com.prashant.backendorderservice.auth.dto.response.LoginResponseDto;
-import com.prashant.backendorderservice.auth.dto.response.SignupResponseDto;
+import com.prashant.backendorderservice.auth.dto.request.LoginRequest;
+import com.prashant.backendorderservice.auth.dto.response.LoginResponse;
+import com.prashant.backendorderservice.auth.dto.response.SignupResponse;
 import com.prashant.backendorderservice.auth.entity.User;
 import com.prashant.backendorderservice.auth.exception.InvalidCredentialsException;
 import com.prashant.backendorderservice.auth.exception.UserAlreadyExistsException;
@@ -25,35 +25,36 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+    public LoginResponse login(LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequestDto.getUsername(), loginRequestDto.getPassword())
+                            loginRequest.getUsername(), loginRequest.getPassword())
             );
 
             User user = (User) authentication.getPrincipal();
 
             String token = authUtil.generateAccessToken(user);
 
-            return new LoginResponseDto(token, user.getId());
+            return new LoginResponse(token, user.getId());
         } catch (AuthenticationException ex) {
             throw new InvalidCredentialsException("Invalid username or password");
         }
 
     }
 
-    public SignupResponseDto signup(LoginRequestDto signupRequestDto) {
-        User user = userRepository.findByUsername(signupRequestDto.getUsername()).orElse(null);
+    public SignupResponse signup(LoginRequest signupRequest) {
+        User user = userRepository.findByUsername(signupRequest.getUsername()).orElse(null);
 
-        if (user != null) throw new UserAlreadyExistsException("User already exists: " + signupRequestDto.getUsername());
+        if (user != null) throw new UserAlreadyExistsException("User already exists: " + signupRequest.getUsername());
+
 
         user = userRepository.save(User.builder()
-                .username(signupRequestDto.getUsername())
-                .password(passwordEncoder.encode(signupRequestDto.getPassword()))
+                .username(signupRequest.getUsername())
+                .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .build()
         );
 
-        return  new SignupResponseDto(user.getId(), user.getUsername());
+        return  new SignupResponse(user.getId(), user.getUsername());
     }
 }

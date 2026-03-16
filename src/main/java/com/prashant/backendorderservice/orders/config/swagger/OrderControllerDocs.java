@@ -30,6 +30,23 @@ public interface OrderControllerDocs {
                     )
             ),
             @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid username or password",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                       "timestamp": "2026-03-16T17:46:35.114979100",
+                                       "status": 401,
+                                       "error": "UNAUTHORIZED",
+                                       "message": "Invalid username or password",
+                                       "path": "/orders"
+                                     }
+                                """)
+                    )
+            ),
+            @ApiResponse(
                     responseCode = "400",
                     description = "Invalid Order Status",
                     content = @Content(
@@ -83,6 +100,23 @@ public interface OrderControllerDocs {
 
             ),
             @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid username or password",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                       "timestamp": "2026-03-16T17:46:35.114979100",
+                                       "status": 401,
+                                       "error": "UNAUTHORIZED",
+                                       "message": "Invalid username or password",
+                                       "path": "/orders"
+                                     }
+                                """)
+                    )
+            ),
+            @ApiResponse(
                     responseCode = "404",
                     description = "Order not found",
                     content = @Content(
@@ -117,6 +151,23 @@ public interface OrderControllerDocs {
                     )
             ),
             @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid username or password",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                       "timestamp": "2026-03-16T17:46:35.114979100",
+                                       "status": 401,
+                                       "error": "UNAUTHORIZED",
+                                       "message": "Invalid username or password",
+                                       "path": "/orders"
+                                     }
+                                """)
+                    )
+            ),
+            @ApiResponse(
                     responseCode = "404",
                     description = "Order not found",
                     content = @Content(
@@ -144,6 +195,23 @@ public interface OrderControllerDocs {
             @ApiResponse(
                     responseCode = "204",
                     description = "Order deleted successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid username or password",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                       "timestamp": "2026-03-16T17:46:35.114979100",
+                                       "status": 401,
+                                       "error": "UNAUTHORIZED",
+                                       "message": "Invalid username or password",
+                                       "path": "/orders"
+                                     }
+                                """)
+                    )
             ),
             @ApiResponse(
                     responseCode = "404",
