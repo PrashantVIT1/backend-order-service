@@ -1,7 +1,7 @@
 package com.prashant.backendorderservice.auth.support;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prashant.backendorderservice.auth.dto.request.LoginRequestDto;
+import com.prashant.backendorderservice.auth.dto.request.LoginRequest;
 import com.prashant.backendorderservice.auth.entity.User;
 import com.prashant.backendorderservice.auth.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +52,7 @@ public abstract class AuthenticatedE2ETest {
                 .password(passwordEncoder.encode("password123"))
                 .build());
 
-        LoginRequestDto loginRequest = new LoginRequestDto();
+        LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("testuser");
         loginRequest.setPassword("password123");
 
