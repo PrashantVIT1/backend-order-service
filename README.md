@@ -84,6 +84,7 @@ The service follows a standard layered architecture:
 - CI pipeline implemented with GitHub Actions
 - OpenAPI/Swagger documentation for API exploration
 - Designed following microservices and cloud-ready best practices
+- JWT based authentication and authorization using Spring Security
 
 ## Local Setup Instructions
 
@@ -171,75 +172,109 @@ Integration tests use Testcontainers, which automatically:
 
 ## Project Structure
 ```text
-backend-order-service
-│
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com/prashant/backendorderservice
-│   │   │       ├── controller
-│   │   │       │   └── OrderController.java
-│   │   │       │
-│   │   │       ├── service
-│   │   │       │   ├── OrderService.java
-│   │   │       │   └── OrderServiceOperations.java
-│   │   │       │
-│   │   │       ├── dto
-│   │   │       │   ├── request
-│   │   │       │   │   ├── CreateOrderRequest.java
-│   │   │       │   │   └── UpdateOrderStatusRequest.java
-│   │   │       │   │
-│   │   │       │   └── response
-│   │   │       │       ├── ErrorResponse.java
-│   │   │       │       ├── OrderResponse.java
-│   │   │       │       └── UpdateOrderStatusResponse.java
-│   │   │       │
-│   │   │       ├── model
-│   │   │       │   ├── Order.java
-│   │   │       │   └── OrderStatus.java
-│   │   │       │
-│   │   │       ├── repository
-│   │   │       │   └── OrderRepository.java
-│   │   │       │
-│   │   │       ├── exception
-│   │   │       │   ├── BusinessException.java   
-│   │   │       │   ├── OrderNotFoundException.java        
-│   │   │       │   └── GlobalExceptionHandler.java
-│   │   │       │
-│   │   │       ├── config
-│   │   │       │   ├── swagger
-│   │   │       │   │   └── OrderControllerDocs.java
-│   │   │       │   └── OpenApiConfig.java
-│   │   │       │
+backend-order-service/
+└── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com.prashant.backendorderservice/
+│   │   │       ├── auth/
+│   │   │       │   ├── config/
+│   │   │       │   │   ├── swagger/
+│   │   │       │   │   │   └── AuthControllerDocs.java
+│   │   │       │   │   ├── AppConfig.java
+│   │   │       │   │   └── WebSecurityConfig.java
+│   │   │       │   ├── controller/
+│   │   │       │   │   └── AuthController.java
+│   │   │       │   ├── dto/
+│   │   │       │   │   ├── request/
+│   │   │       │   │   │   └── LoginRequest.java
+│   │   │       │   │   └── response/
+│   │   │       │   │       ├── LoginResponse.java
+│   │   │       │   │       └── SignupResponse.java
+│   │   │       │   ├── entity/
+│   │   │       │   │   └── User.java
+│   │   │       │   ├── exception/
+│   │   │       │   │   ├── AuthExceptionHandler.java
+│   │   │       │   │   ├── CustomAuthEntryPoint.java
+│   │   │       │   │   ├── InvalidCredentialsException.java
+│   │   │       │   │   └── UserAlreadyExistsException.java
+│   │   │       │   ├── filter/
+│   │   │       │   │   └── JwtAuthFilter.java
+│   │   │       │   ├── repository/
+│   │   │       │   │   └── UserRepository.java
+│   │   │       │   ├── service/
+│   │   │       │   │   ├── AuthService.java
+│   │   │       │   │   └── CustomUserDetailsService.java
+│   │   │       │   └── util/
+│   │   │       │       └── AuthUtil.java
+│   │   │       ├── orders/
+│   │   │       │   ├── config/
+│   │   │       │   │   └── swagger/
+│   │   │       │   │       └── OrderControllerDocs.java
+│   │   │       │   ├── controller/
+│   │   │       │   │   └── OrderController.java
+│   │   │       │   ├── dto/
+│   │   │       │   │   ├── request/
+│   │   │       │   │   │   ├── CreateOrderRequest.java
+│   │   │       │   │   │   └── UpdateOrderStatusRequest.java
+│   │   │       │   │   └── response/
+│   │   │       │   │       ├── OrderResponse.java
+│   │   │       │   │       └── UpdateOrderStatusResponse.java
+│   │   │       │   ├── entity/
+│   │   │       │   │   ├── Order.java
+│   │   │       │   │   └── OrderStatus.java          (enum)
+│   │   │       │   ├── exception/
+│   │   │       │   │   ├── custom/
+│   │   │       │   │   │   ├── BusinessException.java
+│   │   │       │   │   │   ├── OrderNotFoundException.java
+│   │   │       │   │   │   └── OrderStatusInvalidException.java
+│   │   │       │   │   └── OrdersExceptionHandler.java
+│   │   │       │   ├── repository/
+│   │   │       │   │   └── OrderRepository.java
+│   │   │       │   ├── serializer/
+│   │   │       │   │   └── OrderStatusDeserializer.java
+│   │   │       │   └── service/
+│   │   │       │       ├── OrderService.java
+│   │   │       │       └── OrderServiceOperations.java
+│   │   │       ├── shared/
+│   │   │       │   ├── config/
+│   │   │       │   │   ├── exception/
+│   │   │       │   │   │   └── ExceptionHandlerOrder.java
+│   │   │       │   │   └── swagger/
+│   │   │       │   │       ├── GlobalExceptionHandlerDocs.java
+│   │   │       │   │       └── OpenApiConfig.java
+│   │   │       │   ├── dto/
+│   │   │       │   │   └── ErrorResponse.java
+│   │   │       │   └── exception/
+│   │   │       │       ├── GlobalExceptionHandler.java
+│   │   │       │       └── RequestExceptionHandler.java
 │   │   │       └── BackendOrderServiceApplication.java
-│   │   │
-│   │   └── resources
-│   │       ├── db.changelog
-│   │       │   ├── changes
+│   │   └── resources/
+│   │       ├── db.changelog/
+│   │       │   ├── changes/
+│   │       │   │   ├── 001-create-app-user-table.yaml
 │   │       │   │   └── 001-create-orders-table.yaml
-│   │       │   └── db.changelog-master.yaml    
+│   │       │   └── db.changelog-master.yaml
 │   │       └── application.properties
-│   │
-│   └── test
-│       ├── java
-│       │   └── com/prashant/backendorderservice
-│       │       ├── controller
-│       │       │   └── OrderControllerTest.java
-│       │       │
-│       │       ├── service
-│       │       │   └── OrderServiceTest.java
-│       │       │
-│       │       ├── repository
-│       │       │   └── OrderRepositoryTest.java
-│       │       │      
-│       │       ├── integration
-│       │       │   └── OrderRepositoryIntegrationTest.java
-│       │       │      
-│       │       │
-│       │       └── BackendOrderServiceApplicationTest.java 
-│       │
-│       └── resources
-│           └── application-test.yml
+│   └── test/
+│       └── java/
+│           └── com.prashant.backendorderservice/
+│               ├── auth/
+│               │   └── support/
+│               │       ├── AuthenticatedE2ETest.java
+│               │       └── SecuredControllerTest.java
+│               ├── orders/
+│               │   ├── controller/
+│               │   │   └── OrderControllerTest.java
+│               │   ├── integration/
+│               │   │   ├── OrderE2ETest.java
+│               │   │   └── OrderRepositoryIntegrationTest.java
+│               │   ├── repository/
+│               │   │   └── OrderRepositoryTest.java
+│               │   └── service/
+│               │       └── OrderServiceTest.java
+│               ├── AllTestsSuite.java
+│               └── BackendOrderServiceApplicationTests.java
 │
 ├── pom.xml
 └── README.md
@@ -263,9 +298,52 @@ Continuous Integration is implemented using GitHub Actions. The pipeline automat
 Swagger UI: [http://localhost:8082/swagger-ui/index.html](http://localhost:8082/swagger-ui/index.html)
 
 <p align="center">
-  <img width="1000" height = "600" alt="Swagger API documentation" src="https://github.com/user-attachments/assets/22a02eac-b98d-46a6-b341-0736fd3bba1f" />
-</p>
 
+  <img width="1000" height = "600" alt="Swagger API documentation" src="https://github.com/user-attachments/assets/c445ff46-869b-45ab-bb43-5d33801b051f" />
+
+</p>
+Instructions to use JWT Token in swagger 
+
+1. Create user by using 
+
+`POST`  http://localhost:8082/auth/signup
+
+<img width="936" height="865" alt="image" src="https://github.com/user-attachments/assets/1b40786d-5c4f-4465-ad95-bafa314ba6bd" />
+
+2. Go to
+
+`POST`  http://localhost:8082/auth/login
+
+<img width="947" height="802" alt="image" src="https://github.com/user-attachments/assets/47fbfd5a-37a9-4638-9a5b-8cae66f216de" />
+
+then copy this JWT token
+
+<img width="1687" height="171" alt="image" src="https://github.com/user-attachments/assets/5ee8224d-3a1a-493a-a962-22ba13254789" />
+
+3. Now click on Authorize Button in the topleft corner
+   
+<img width="941" height="227" alt="image" src="https://github.com/user-attachments/assets/1e553021-62fa-4d9e-9e97-eb0bb46ff6c0" />
+
+A popup will open. Paste JWT token here.
+
+<img width="487" height="202" alt="image" src="https://github.com/user-attachments/assets/77bba871-df17-4101-8247-1b65bfbe0dd9" />
+
+
+4. Then click on Authorize
+   
+   <img width="487" height="205" alt="image" src="https://github.com/user-attachments/assets/538eec43-f53d-4830-ab16-7c300462acf2" />
+
+5. Then this popup will open click on close
+
+<img width="488" height="202" alt="image" src="https://github.com/user-attachments/assets/1acb8044-ea29-4afa-8be0-c9550a50e762" />
+
+6. Now all endpoints can be used.
+  
+7. You can also logout. Click on Authorize and a popup opens. Then click here.
+   
+   <img width="840" height="350" alt="image" src="https://github.com/user-attachments/assets/26575fc1-2827-4a96-9b53-07e9158eb2c0" />
+
+   
 ## Endpoints
 ### Error Response Format
 
@@ -280,6 +358,79 @@ All error responses follow a consistent structure for example:
 }
 ```
 ### In Detail
+
+#### Authentication
+| Method | Endpoint            | Status Code | Description              |
+|--------|---------------------|:-----------:|--------------------------|
+| POST   | /auth/signup        | 201         | Create a new user        |
+| POST   | /auth/login         | 200         | Login an exixting user   |
+
+`POST`  http://localhost:8082/auth/signup
+
+Request Body :
+```json
+{
+    "username":"praj12345",
+    "password":"best_password_ever123"
+}   
+```
+
+| Status Code | Reason |
+|:-----------:|--------|
+| `201` | User created successfully |
+| `400` | Empty Username/Password field |
+| `409` | Use Different Username |
+| `500` | INTERNAL SERVER ERROR |
+
+
+
+Response Body :
+```json
+{
+    "id": 25,
+    "username": "praj12345"
+}  
+```
+Example Reference:
+<p align="center">
+  
+<img width="1431" height="933" alt="image" src="https://github.com/user-attachments/assets/0a4ab8fe-b8ba-46bd-9957-fb6088f25e5f" />
+
+</p>
+
+`POST`  http://localhost:8082/auth/login
+
+Request Body :
+```json
+{
+  "username": "praj12345",
+  "password": "best_password_ever123"
+}   
+```
+| Status Code | Reason |
+|:-----------:|--------|
+| `200` | User login successfully |
+| `400` | Empty Username/Password field |
+| `401` | Invalid username or password |
+| `500` | INTERNAL SERVER ERROR |
+
+
+Response Body :
+```json
+{
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFqMTIzNDUiLCJ1c2VySWQiOiIyNSIsImlhdCI6MTc3MzY4MDIzNiwiZXhwIjoxNzczNjgwODM2fQ.8AW4aWZA1TcawmlieHuPdW8qgnjMcTuHJHMCpAvTgFN9SVwGWIo4UdHvJ6H7npkuXjueioksKpAVhHSsJsRulg",
+    "userId": 25
+} 
+```
+
+Example Reference:
+<p align="center">
+  
+<img width="1431" height="935" alt="image" src="https://github.com/user-attachments/assets/42be65e4-71ee-4214-8fb1-81ed7b7cf5be" />
+
+</p>
+
+#### Orders
 
 | Method | Endpoint            | Status Code | Description              |
 |--------|---------------------|:-----------:|--------------------------|
@@ -405,7 +556,6 @@ Example Reference:
 
 ## Future Improvements
 
-- Add authentication and authorization using Spring Security
 - Introduce distributed tracing using OpenTelemetry
 - Implement event-driven communication using Kafka
 - Deploy using Kubernetes for scalable container orchestration
