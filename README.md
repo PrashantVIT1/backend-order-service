@@ -19,8 +19,6 @@ The application follows **industry-standard layered architecture** (Controller, 
 - [Endpoints](#endpoints)
 - [Future Improvements](#future-improvements)
 - [License](#license)
-  
-> If on click 500 status page appers then `refresh` the 500 status page. It will work.
 
 ## Architecture Overview
 
@@ -363,7 +361,7 @@ All error responses follow a consistent structure for example:
 | Method | Endpoint            | Status Code | Description              |
 |--------|---------------------|:-----------:|--------------------------|
 | POST   | /auth/signup        | 201         | Create a new user        |
-| POST   | /auth/login         | 200         | Login an exixting user   |
+| POST   | /auth/login         | 200         | Login an existing user   |
 
 `POST`  http://localhost:8082/auth/signup
 
