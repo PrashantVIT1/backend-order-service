@@ -8,10 +8,17 @@ import lombok.Data;
 @Data
 public class LoginRequest {
 
-    @Schema(example = "praj2")
+    @Schema(
+            description = "Unique username to login/signup",
+            example = "praj2"
+    )
     @NotBlank(message = "Username must not be blank")
     private String username;
-    @Schema(example = "best_password_ever123")
+
+    @Schema(
+            description = "Password to login/signup",
+            example = "best_password_ever123"
+    )
     @NotBlank(message = "Password must not be blank")
     private String password;
 }
