@@ -11,7 +11,10 @@ import lombok.Setter;
 @Setter
 public class UpdateOrderStatusRequest {
 
-    @Schema(example = "PROCESSING")
+    @Schema(
+            description = "Status of ordered item",
+            example = "PROCESSING"
+    )
     @NotNull(message = "Status is required")
     private OrderStatus status;
 

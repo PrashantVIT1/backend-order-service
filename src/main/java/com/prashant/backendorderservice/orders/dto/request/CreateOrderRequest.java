@@ -11,13 +11,21 @@ import lombok.Setter;
 @Setter
 public class CreateOrderRequest {
 
-    @Schema(example = "123")
+    @Schema(
+            description = "Id associated with customer",
+            example = "123"
+    )
     @NotNull
     private Long customerId;
-
-    @Schema(example = "iPhone 15 Pro")
+    @Schema(
+            description = "Description of ordered item",
+            example = "iPhone 15 Pro"
+    )
     @NotBlank
     private String description;
-    @Schema(example = "CREATED")
+    @Schema(
+            description = "Status of ordered item",
+            example = "CREATED"
+    )
     private OrderStatus status;
 }

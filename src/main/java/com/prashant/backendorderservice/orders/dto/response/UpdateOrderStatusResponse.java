@@ -14,10 +14,19 @@ import java.time.LocalDateTime;
 @Builder
 public class UpdateOrderStatusResponse {
 
-    @Schema(example = "1")
+    @Schema(
+            description = "Ordered item Id",
+            example = "1"
+    )
     private Long id;
-    @Schema(example = "PROCESSING")
+
+    @Schema(
+            description = "Status of ordered item",
+            example = "PROCESSING"
+    )
     private OrderStatus status;
-    @Schema(example = "2026-02-05T06:01:28.829Z")
+    @Schema(
+            description = "Timestamp when the orders updated"
+    )
     private LocalDateTime updatedAt;
 }

@@ -10,12 +10,25 @@ import lombok.Setter;
 @Setter
 @Builder
 public class OrderResponse {
-    @Schema(example = "1")
+    @Schema(
+            description = "Ordered item Id",
+            example = "1"
+    )
     private Long id;
-    @Schema(example = "123")
+    @Schema(
+            description = "Id associated with customer",
+            example = "123"
+    )
     private Long customerId;
-    @Schema(example = "iPhone 15 Pro")
+
+    @Schema(
+            description = "Description of ordered item",
+            example = "iPhone 15 Pro"
+    )
     private String description;
-    @Schema(example = "CREATED")
+    @Schema(
+            description = "Status of ordered item",
+            example = "PROCESSING"
+    )
     private OrderStatus status;
 }
