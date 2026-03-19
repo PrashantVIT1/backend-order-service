@@ -295,51 +295,49 @@ Continuous Integration is implemented using GitHub Actions. The pipeline automat
 
 Swagger UI: [http://localhost:8082/swagger-ui/index.html](http://localhost:8082/swagger-ui/index.html)
 
-<p align="center">
 
-  <img width="1000" height = "600" alt="Swagger API documentation" src="https://github.com/user-attachments/assets/c445ff46-869b-45ab-bb43-5d33801b051f" />
+<img width="900" height = "600" alt="Swagger API documentation" src="https://github.com/user-attachments/assets/c445ff46-869b-45ab-bb43-5d33801b051f" />
 
-</p>
 Instructions to use JWT Token in swagger 
 
 1. Create user by using 
 
 `POST`  http://localhost:8082/auth/signup
 
-<img width="936" height="865" alt="image" src="https://github.com/user-attachments/assets/1b40786d-5c4f-4465-ad95-bafa314ba6bd" />
+<img width="900" height="865" alt="image" src="https://github.com/user-attachments/assets/1b40786d-5c4f-4465-ad95-bafa314ba6bd" />
 
 2. Go to
 
 `POST`  http://localhost:8082/auth/login
 
-<img width="947" height="802" alt="image" src="https://github.com/user-attachments/assets/47fbfd5a-37a9-4638-9a5b-8cae66f216de" />
+<img width="900" height="802" alt="image" src="https://github.com/user-attachments/assets/47fbfd5a-37a9-4638-9a5b-8cae66f216de" />
 
 then copy this JWT token
 
-<img width="1687" height="171" alt="image" src="https://github.com/user-attachments/assets/5ee8224d-3a1a-493a-a962-22ba13254789" />
+<img width="900" height="171" alt="image" src="https://github.com/user-attachments/assets/5ee8224d-3a1a-493a-a962-22ba13254789" />
 
 3. Now click on Authorize Button in the topleft corner
    
-<img width="941" height="227" alt="image" src="https://github.com/user-attachments/assets/1e553021-62fa-4d9e-9e97-eb0bb46ff6c0" />
+<img width="900" height="227" alt="image" src="https://github.com/user-attachments/assets/1e553021-62fa-4d9e-9e97-eb0bb46ff6c0" />
 
 A popup will open. Paste JWT token here.
 
-<img width="487" height="202" alt="image" src="https://github.com/user-attachments/assets/77bba871-df17-4101-8247-1b65bfbe0dd9" />
+<img width="440" height="150" alt="image" src="https://github.com/user-attachments/assets/77bba871-df17-4101-8247-1b65bfbe0dd9" />
 
 
 4. Then click on Authorize
    
-   <img width="487" height="205" alt="image" src="https://github.com/user-attachments/assets/538eec43-f53d-4830-ab16-7c300462acf2" />
+<img width="440" height="150" alt="image" src="https://github.com/user-attachments/assets/538eec43-f53d-4830-ab16-7c300462acf2" />
 
 5. Then this popup will open click on close
 
-<img width="488" height="202" alt="image" src="https://github.com/user-attachments/assets/1acb8044-ea29-4afa-8be0-c9550a50e762" />
+<img width="440" height="150" alt="image" src="https://github.com/user-attachments/assets/1acb8044-ea29-4afa-8be0-c9550a50e762" />
 
 6. Now all endpoints can be used.
   
 7. You can also logout. Click on Authorize and a popup opens. Then click here.
    
-   <img width="840" height="350" alt="image" src="https://github.com/user-attachments/assets/26575fc1-2827-4a96-9b53-07e9158eb2c0" />
+<img width="440" height="150" alt="image" src="https://github.com/user-attachments/assets/26575fc1-2827-4a96-9b53-07e9158eb2c0" />
 
    
 ## Endpoints
