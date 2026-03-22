@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 
 @Tag(name = "Orders", description = "Order management APIs")
 public interface OrderControllerDocs {
@@ -136,6 +138,36 @@ public interface OrderControllerDocs {
     })
     ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(Long id, UpdateOrderStatusRequest request);
 
+    // ================= GET ORDERS=================
+
+    @Operation(summary = "Get All The Orders")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Orders fetched successfully",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = OrderResponse.class),
+                            examples = @ExampleObject(value = """
+                            [
+                                {
+                                    "id": 41,
+                                        "customerId": 123,
+                                        "description": "iPhone 15 Pro",
+                                        "status": "CREATED"
+                                },
+                                {
+                                    "id": 42,
+                                        "customerId": 123,
+                                        "description": "iPhone 15 Pro",
+                                        "status": "CREATED"
+                                }
+                            ]
+                            """)
+                    )
+            )
+    })
+    ResponseEntity<List<OrderResponse>> getOrders();
 
 
     // ================= GET ORDER =================

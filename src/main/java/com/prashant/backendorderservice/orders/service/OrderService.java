@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +42,7 @@ public class OrderService implements OrderServiceOperations{
                 .build();
     }
 
-    public UpdateOrderStatusResponse updateOrderStatusbyId(Long id, UpdateOrderStatusRequest request){
+    public UpdateOrderStatusResponse updateOrderStatusById(Long id, UpdateOrderStatusRequest request){
         Order response = orderRepository.findById(id)
                 .orElseThrow(() ->
                         new OrderNotFoundException(id));
@@ -59,6 +61,21 @@ public class OrderService implements OrderServiceOperations{
                 .status(response.getStatus())
                 .updatedAt(response.getUpdatedAt())
                 .build();
+    }
+
+
+    private OrderResponse toOrderResponse(Order order) {
+        return OrderResponse.builder()
+                .id(order.getId())
+                .customerId(order.getCustomerId())
+                .description(order.getDescription())
+                .status(order.getStatus())
+                .build();
+    }
+    public List<OrderResponse> getOrders() {
+        return orderRepository.findAll().stream()
+                .map(this::toOrderResponse)
+                .toList();
     }
 
 
