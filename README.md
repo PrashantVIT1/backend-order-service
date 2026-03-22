@@ -425,6 +425,18 @@ Example Reference:
 <img width="1431" height="935" alt="image" src="https://github.com/user-attachments/assets/42be65e4-71ee-4214-8fb1-81ed7b7cf5be" />
 
 </p>
+> Note: All the protected endpoints needs access. To get the access authentication with JWT token is required
+
+> Steps to get the access
+
+>  i) Login and copy the jwt token from response body
+
+> ii) Go to Header add JWT token in the given format below
+
+>     Authorization : Bearer <token>
+```text
+Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFqMTIzNDUiLCJ1c2VySWQiOiIyIiwiaWF0IjoxNzc0MTkzNzE3LCJleHAiOjE3NzQxOTQzMTd9.oi1EOu-L7AlMg7xC2pytzAwWai7K_As4BA-XD7QAG74uDKs5Q0oWcqWjEZoC7ZbqnGdsK6kucJyl8XiG66cacw
+```
 
 #### Orders
 
@@ -432,6 +444,7 @@ Example Reference:
 |--------|---------------------|:-----------:|--------------------------|
 | POST   | /orders             | 201         | Create a new order       |
 | PATCH  | /orders/{id}/status | 200         | Update order status      |
+| GET    | /orders             | 200         | Retrieve all the orders  |
 | GET    | /orders/{id}        | 200         | Retrieve an order by ID  |
 | DELETE | /orders/{id}        | 204         | Delete an order          |
 
@@ -505,6 +518,29 @@ Example Reference:
   <img width="1000" alt="PATCH method Postman" src="https://github.com/user-attachments/assets/46e9f47a-ee47-4a8f-8e1f-cfb89ed824bd" />
 </p>
 
+`GET`  http://localhost:8082/orders
+
+| Status Code | Reason |
+|:-----------:|--------|
+| `200` | Order retrieved successfully |
+
+Response Body :
+```json
+[
+    {
+      "id": 15,
+      "customerId": 14,
+      "description": "Medicine and Hospital Equipment",
+      "status": "CREATED"
+    }
+]   
+```
+
+Example Reference:
+
+<p align="center">
+    <img width="1000" alt="image" src="https://github.com/user-attachments/assets/011aa93b-4130-46c7-90d0-80e898b932f5" />
+</p>
 
 `GET`  http://localhost:8082/orders/{id}
 
