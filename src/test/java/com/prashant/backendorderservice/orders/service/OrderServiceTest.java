@@ -78,7 +78,7 @@ class OrderServiceTest {
         when(orderRepository.findById(1L))
                 .thenReturn(Optional.of(order));
 
-        UpdateOrderStatusResponse response = orderService.updateOrderStatusbyId(1L, request);
+        UpdateOrderStatusResponse response = orderService.updateOrderStatusById(1L, request);
 
         assertEquals(OrderStatus.SHIPPED, response.getStatus());
         verify(orderRepository).save(order);

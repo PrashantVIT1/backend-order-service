@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "Orders", description = "Order management APIs")
 @RestController
 @RequiredArgsConstructor
@@ -40,11 +42,17 @@ public class OrderController implements OrderControllerDocs {
             @Valid @RequestBody UpdateOrderStatusRequest request
     ) {
         return ResponseEntity.ok(
-                orderService.updateOrderStatusbyId(id, request)
+                orderService.updateOrderStatusById(id, request)
         );
     }
+    // ================= GET ORDER=================
 
-    // ================= GET ORDER =================
+    @GetMapping
+    public ResponseEntity<List<OrderResponse>> getOrders() {
+        return ResponseEntity.ok(orderService.getOrders());
+    }
+
+    // ================= GET ORDER BY ID=================
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long id) {

@@ -88,7 +88,7 @@ class OrderControllerTest extends SecuredControllerTest {
                 .updatedAt(LocalDateTime.now())
                 .build();
 
-        when(orderService.updateOrderStatusbyId(
+        when(orderService.updateOrderStatusById(
                 eq(1L),
                 any(UpdateOrderStatusRequest.class)
         )).thenReturn(response);
@@ -100,7 +100,7 @@ class OrderControllerTest extends SecuredControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.status").value("SHIPPED"));
 
-        verify(orderService).updateOrderStatusbyId(eq(1L), any(UpdateOrderStatusRequest.class));
+        verify(orderService).updateOrderStatusById(eq(1L), any(UpdateOrderStatusRequest.class));
         verifyNoMoreInteractions(orderService);
     }
 
