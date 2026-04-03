@@ -109,10 +109,10 @@ No manual table creation is required. The database schema is automatically manag
 
 ### 3. Configure Database Credentials
 ```properties
-  Update your application.properties file:
-  spring.datasource.url=jdbc:postgresql://localhost:5432/orderdb
-  spring.datasource.username=your_username
-  spring.datasource.password=your_password
+    spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/testdb}
+    spring.datasource.username=${DB_USER:root}
+    spring.datasource.password=${DB_PASSWORD:password}
+    jwt.secret=${JWT_SECRET:dev-secret}
 ```
 
 In production environments, credentials should be managed using environment variables or a secrets management service instead of hardcoding values.
