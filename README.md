@@ -108,6 +108,7 @@ No manual table creation is required. The database schema is automatically manag
 ---
 
 ### 3. Configure Database Credentials
+Update your application.properties file:
 ```properties
     spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/testdb}
     spring.datasource.username=${DB_USER:root}
