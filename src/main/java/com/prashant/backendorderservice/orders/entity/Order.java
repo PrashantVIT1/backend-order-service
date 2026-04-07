@@ -39,6 +39,9 @@ public class Order {
     private Long customerId;
 
     @Column(nullable = false)
+    private Long userId;
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)

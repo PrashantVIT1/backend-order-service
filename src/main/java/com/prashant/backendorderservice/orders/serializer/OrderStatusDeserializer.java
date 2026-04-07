@@ -25,7 +25,7 @@ public class OrderStatusDeserializer extends JsonDeserializer<OrderStatus> {
         try {
             return OrderStatus.valueOf(value.toUpperCase());
         } catch (IllegalArgumentException ex) {
-            throw new OrderStatusInvalidException(  // your custom exception
+            throw new OrderStatusInvalidException(
                     "Invalid status value: " + value + ". Valid values: "
                             + Arrays.stream(OrderStatus.values())
                             .map(Enum::name)

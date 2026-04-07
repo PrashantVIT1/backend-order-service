@@ -1,24 +1,68 @@
 package com.prashant.backendorderservice.orders.config.swagger;
 
+import com.prashant.backendorderservice.orders.dto.request.CreateOrderRequest;
 import com.prashant.backendorderservice.orders.dto.request.UpdateOrderStatusRequest;
-import com.prashant.backendorderservice.shared.dto.ErrorResponse;
 import com.prashant.backendorderservice.orders.dto.response.OrderResponse;
 import com.prashant.backendorderservice.orders.dto.response.UpdateOrderStatusResponse;
+import com.prashant.backendorderservice.shared.dto.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-
-@Tag(name = "Orders", description = "Order management APIs")
-public interface OrderControllerDocs {
-
+public interface UsersOrderControllerDocs {
+    // ================= CREATE ORDER =================
+    @Operation(summary = "Create a new order")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Order created successfully",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = OrderResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid username or password",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                       "timestamp": "2026-03-16T17:46:35.114979100",
+                                       "status": 401,
+                                       "error": "UNAUTHORIZED",
+                                       "message": "Invalid username or password",
+                                       "path": "/orders"
+                                     }
+                                """)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid Order Status",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                                {
+                                  "timestamp": "2026-03-09T10:15:30",
+                                  "status": 400,
+                                  "error": "INVALID_ENUM_VALUE",
+                                  "message": "Valid ENUM VALUE for Status : CREATED, PROCESSING, SHIPPED, COMPLETED, CANCELLED",
+                                  "path": "/orders"
+                                }
+                                """)
+                    )
+            )
+    })
+    ResponseEntity<OrderResponse> createOrder(CreateOrderRequest request);
 
     // ================= UPDATE ORDER STATUS =================
 
@@ -214,6 +258,5 @@ public interface OrderControllerDocs {
             )
     })
     ResponseEntity<Void> deleteOrderById(Long id);
-
 
 }

@@ -2,11 +2,14 @@ package com.prashant.backendorderservice.orders.repository;
 
 import com.prashant.backendorderservice.orders.entity.Order;
 import com.prashant.backendorderservice.orders.entity.OrderStatus;
+import jakarta.validation.ConstraintViolationException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +24,11 @@ class OrderRepositoryTest {
     @Autowired
     private OrderRepository orderRepository;
 
+    @BeforeEach
+    void setUp() {
+        orderRepository.deleteAll();
+    }
+
     @Test
     @DisplayName("Should save and retrieve order successfully")
     void shouldSaveAndFindOrder() {
@@ -28,6 +36,7 @@ class OrderRepositoryTest {
         // Given
         Order order = new Order();
         order.setCustomerId(123L);
+        order.setUserId(1L);
         order.setDescription("iPhone 15");
         order.setStatus(OrderStatus.CREATED);
 
@@ -51,10 +60,12 @@ class OrderRepositoryTest {
         Order order1 = new Order();
         order1.setCustomerId(123L);
         order1.setDescription("iPhone 15");
+        order1.setUserId(1L);
         order1.setStatus(OrderStatus.CREATED);
 
         Order order2 = new Order();
         order2.setCustomerId(2L);
+        order2.setUserId(2L);
         order2.setDescription("Mobile");
         order2.setStatus(OrderStatus.CREATED);
 
@@ -71,11 +82,13 @@ class OrderRepositoryTest {
 
         Order order1 = new Order();
         order1.setCustomerId(123L);
+        order1.setUserId(1L);
         order1.setDescription("iPhone 15");
         order1.setStatus(OrderStatus.CREATED);
 
         Order order2 = new Order();
         order2.setCustomerId(2L);
+        order2.setUserId(2L);
         order2.setDescription("Mobile");
         order2.setStatus(OrderStatus.CREATED);
 
@@ -93,13 +106,14 @@ class OrderRepositoryTest {
     void shouldFailWhenDescriptionIsNull() {
         Order order = new Order();
         order.setCustomerId(123L);
+        order.setUserId(1L);
         order.setDescription(null);
         order.setStatus(OrderStatus.CREATED);
 
         orderRepository.save(order);
 
         assertThatThrownBy(() -> orderRepository.flush())
-                .isInstanceOf(Exception.class);
+                .isInstanceOf(DataIntegrityViolationException.class);
     }
 
 

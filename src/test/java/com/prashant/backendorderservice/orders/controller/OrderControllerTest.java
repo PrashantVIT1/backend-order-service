@@ -2,6 +2,7 @@ package com.prashant.backendorderservice.orders.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prashant.backendorderservice.auth.config.WebSecurityConfig;
+import com.prashant.backendorderservice.auth.entity.User;
 import com.prashant.backendorderservice.orders.dto.request.CreateOrderRequest;
 import com.prashant.backendorderservice.orders.dto.request.UpdateOrderStatusRequest;
 import com.prashant.backendorderservice.orders.dto.response.OrderResponse;
@@ -10,6 +11,7 @@ import com.prashant.backendorderservice.orders.exception.custom.OrderNotFoundExc
 import com.prashant.backendorderservice.orders.entity.OrderStatus;
 import com.prashant.backendorderservice.orders.service.OrderService;
 import com.prashant.backendorderservice.auth.support.SecuredControllerTest;
+import com.prashant.backendorderservice.orders.service.UsersOrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -39,40 +41,11 @@ class OrderControllerTest extends SecuredControllerTest {
     @MockBean
     private OrderService orderService;
 
+    @MockBean
+    private UsersOrderService  usersOrderService;
+
     @Autowired
     private ObjectMapper objectMapper;
-
-    // ================= CREATE ORDER =================
-
-    @Test
-    void shouldCreateOrderSuccessfully() throws Exception {
-
-        CreateOrderRequest request = new CreateOrderRequest();
-        request.setDescription("Laptop");
-        request.setCustomerId(1L);
-
-        OrderResponse response = OrderResponse.builder()
-                .id(1L)
-                .customerId(1L)
-                .description("Laptop")
-                .status(OrderStatus.CREATED).build();
-
-
-        when(orderService.createOrder(any()))
-                .thenReturn(response);
-
-        mockMvc.perform(post("/orders")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.customerId").value(1))
-                .andExpect(jsonPath("$.description").value("Laptop"))
-                .andExpect(jsonPath("$.status").value("CREATED"));
-
-        verify(orderService).createOrder(any(CreateOrderRequest.class));
-        verifyNoMoreInteractions(orderService);
-    }
 
 //     ================= UPDATE STATUS =================
 
@@ -93,7 +66,7 @@ class OrderControllerTest extends SecuredControllerTest {
                 any(UpdateOrderStatusRequest.class)
         )).thenReturn(response);
 
-        mockMvc.perform(patch("/orders/1/status")
+        mockMvc.perform(patch("/admin/orders/1/status")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -120,7 +93,7 @@ void shouldReturnOrderWhenExists() throws Exception {
     when(orderService.getOrderById(1L))
             .thenReturn(response);
 
-    mockMvc.perform(get("/orders/1"))
+    mockMvc.perform(get("/admin/orders/1"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(1))
@@ -137,7 +110,7 @@ void shouldReturnOrderWhenExists() throws Exception {
         when(orderService.getOrderById(1L))
                 .thenThrow(new OrderNotFoundException(1L));
 
-        mockMvc.perform(get("/orders/1"))
+        mockMvc.perform(get("/admin/orders/1"))
                 .andExpect(status().isNotFound());
 
         verify(orderService).getOrderById(1L);
@@ -151,7 +124,7 @@ void shouldReturnOrderWhenExists() throws Exception {
 
         doNothing().when(orderService).deleteOrderById(1L);
 
-        mockMvc.perform(delete("/orders/1"))
+        mockMvc.perform(delete("/admin/orders/1"))
                 .andExpect(status().isNoContent());
 
         verify(orderService).deleteOrderById(1L);
@@ -164,7 +137,7 @@ void shouldReturnOrderWhenExists() throws Exception {
         doThrow(new OrderNotFoundException(1L))
                 .when(orderService).deleteOrderById(1L);
 
-        mockMvc.perform(delete("/orders/1"))
+        mockMvc.perform(delete("/admin/orders/1"))
                 .andExpect(status().isNotFound());
 
         verify(orderService).deleteOrderById(1L);

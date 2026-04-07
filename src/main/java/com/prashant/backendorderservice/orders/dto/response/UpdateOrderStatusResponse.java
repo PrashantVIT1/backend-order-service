@@ -26,7 +26,8 @@ public class UpdateOrderStatusResponse {
     )
     private OrderStatus status;
     @Schema(
-            description = "Timestamp when the orders updated"
+            description = "Timestamp when the orders updated",
+            example = "PROCESSING"
     )
     private LocalDateTime updatedAt;
 }
