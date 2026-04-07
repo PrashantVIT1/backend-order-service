@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class UsersOrderServiceTest {
+class UsersOrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
 
