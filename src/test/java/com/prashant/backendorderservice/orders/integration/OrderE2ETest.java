@@ -32,7 +32,7 @@ class OrderE2ETest extends AuthenticatedE2ETest {
         request.setCustomerId(1L);
         request.setDescription("MacBook");
 
-        mockMvc.perform(post("/orders")
+        mockMvc.perform(post("/user/orders")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -49,7 +49,7 @@ class OrderE2ETest extends AuthenticatedE2ETest {
         request.setCustomerId(1L);
         request.setDescription("MacBook");
 
-        mockMvc.perform(post("/orders")
+        mockMvc.perform(post("/admin/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isUnauthorized());
@@ -61,11 +61,12 @@ class OrderE2ETest extends AuthenticatedE2ETest {
     void shouldGetOrderById() throws Exception {
         Order order = new Order();
         order.setCustomerId(1L);
+        order.setUserId(1L);
         order.setDescription("MacBook");
         order.setStatus(OrderStatus.CREATED);
         orderRepository.save(order);
 
-        mockMvc.perform(get("/orders/" + order.getId())
+        mockMvc.perform(get("/admin/orders/" + order.getId())
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(order.getId()))
@@ -75,7 +76,7 @@ class OrderE2ETest extends AuthenticatedE2ETest {
 
     @Test
     void shouldReturn404WhenOrderNotFound() throws Exception {
-        mockMvc.perform(get("/orders/999")
+        mockMvc.perform(get("/admin/orders/999")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }
@@ -86,6 +87,7 @@ class OrderE2ETest extends AuthenticatedE2ETest {
     void shouldUpdateOrderStatus() throws Exception {
         Order order = new Order();
         order.setCustomerId(1L);
+        order.setUserId(1L);
         order.setDescription("MacBook");
         order.setStatus(OrderStatus.CREATED);
         orderRepository.save(order);
@@ -93,7 +95,7 @@ class OrderE2ETest extends AuthenticatedE2ETest {
         UpdateOrderStatusRequest request = new UpdateOrderStatusRequest();
         request.setStatus(OrderStatus.SHIPPED);
 
-        mockMvc.perform(patch("/orders/" + order.getId() + "/status")
+        mockMvc.perform(patch("/admin/orders/" + order.getId() + "/status")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -107,18 +109,19 @@ class OrderE2ETest extends AuthenticatedE2ETest {
     void shouldDeleteOrderSuccessfully() throws Exception {
         Order order = new Order();
         order.setCustomerId(1L);
+        order.setUserId(1L);
         order.setDescription("MacBook");
         order.setStatus(OrderStatus.CREATED);
         orderRepository.save(order);
 
-        mockMvc.perform(delete("/orders/" + order.getId())
+        mockMvc.perform(delete("/admin/orders/" + order.getId())
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void shouldReturn404WhenDeletingNonExistentOrder() throws Exception {
-        mockMvc.perform(delete("/orders/999")
+        mockMvc.perform(delete("/admin/orders/999")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNotFound());
     }

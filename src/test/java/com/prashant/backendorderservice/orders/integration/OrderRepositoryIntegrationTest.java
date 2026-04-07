@@ -50,6 +50,7 @@ class OrderRepositoryIntegrationTest {
     void shouldSaveOrder() {
         Order order = new Order();
         order.setCustomerId(1L);
+        order.setUserId(1L);
         order.setDescription("MacBook");
         order.setStatus(OrderStatus.CREATED);
 
@@ -62,6 +63,7 @@ class OrderRepositoryIntegrationTest {
 
         Order order = new Order();
         order.setCustomerId(1L);
+        order.setUserId(1L);
         order.setDescription("MacBook");
         order.setStatus(OrderStatus.CREATED);
 
@@ -81,6 +83,7 @@ class OrderRepositoryIntegrationTest {
 
         Order order = new Order();
         order.setCustomerId(1L);
+        order.setUserId(1L);
         order.setDescription("MacBook");
         order.setStatus(OrderStatus.CREATED);
 
@@ -100,6 +103,7 @@ class OrderRepositoryIntegrationTest {
     void shouldDeleteOrderById() {
         Order order = new Order();
         order.setCustomerId(1L);
+        order.setUserId(1L);
         order.setDescription("MacBook");
         order.setStatus(OrderStatus.CREATED);
         Order saved = orderRepository.saveAndFlush(order);
@@ -116,11 +120,13 @@ class OrderRepositoryIntegrationTest {
         // Arrange
         Order order1 = new Order();
         order1.setCustomerId(1L);
+        order1.setUserId(1L);
         order1.setDescription("MacBook");
         order1.setStatus(OrderStatus.CREATED);
 
         Order order2 = new Order();
         order2.setCustomerId(2L);
+        order2.setUserId(2L);
         order2.setDescription("Books");
         order2.setStatus(OrderStatus.CREATED);
 

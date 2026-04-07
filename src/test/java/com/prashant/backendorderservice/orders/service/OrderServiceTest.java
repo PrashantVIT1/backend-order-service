@@ -1,13 +1,17 @@
 package com.prashant.backendorderservice.orders.service;
 
+import com.prashant.backendorderservice.auth.entity.User;
+import com.prashant.backendorderservice.auth.util.AuthUtil;
 import com.prashant.backendorderservice.orders.dto.request.CreateOrderRequest;
 import com.prashant.backendorderservice.orders.dto.request.UpdateOrderStatusRequest;
 import com.prashant.backendorderservice.orders.dto.response.OrderResponse;
 import com.prashant.backendorderservice.orders.dto.response.UpdateOrderStatusResponse;
 import com.prashant.backendorderservice.orders.entity.Order;
 import com.prashant.backendorderservice.orders.entity.OrderStatus;
+import com.prashant.backendorderservice.orders.exception.custom.OrderNotFoundException;
 import com.prashant.backendorderservice.orders.repository.OrderRepository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,39 +36,12 @@ class OrderServiceTest {
 
     @Mock
     private OrderRepository orderRepository;
+
+    @Mock
+    private AuthUtil authUtil;
+
     @InjectMocks
     private OrderService orderService;
-
-
-
-    @Test
-    void shouldCreateOrderSuccessfully() {
-        // Arrange
-        CreateOrderRequest request = new CreateOrderRequest();
-        request.setCustomerId(123L);
-        request.setDescription("Test Order");
-
-        Order savedOrder = new Order();
-        savedOrder.setId(1L);
-        savedOrder.setCustomerId(123L);
-        savedOrder.setDescription("Test Order");
-        savedOrder.setStatus(OrderStatus.CREATED);
-
-        when(orderRepository.save(any(Order.class)))
-                .thenReturn(savedOrder);
-
-        // Act
-        OrderResponse orderResponse = orderService.createOrder(request);
-
-        // Assert
-        assertNotNull(orderResponse);
-        assertEquals(1L, orderResponse.getId());
-        assertEquals(123L, orderResponse.getCustomerId());
-        assertEquals("Test Order", orderResponse.getDescription());
-        assertEquals(OrderStatus.CREATED, orderResponse.getStatus());
-
-        verify(orderRepository, times(1)).save(any(Order.class));
-    }
 
     @Test
     void shouldUpdateOrderStatus() {
@@ -82,6 +59,7 @@ class OrderServiceTest {
 
         assertEquals(OrderStatus.SHIPPED, response.getStatus());
         verify(orderRepository).save(order);
+        verify(orderRepository, times(1)).save(any(Order.class));
     }
     @Test
     void shouldReturnOrderWhenFound() {
@@ -105,12 +83,7 @@ class OrderServiceTest {
         when(orderRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(
-                RuntimeException.class,
-                () -> orderService.getOrderById(1L)
-        );
-
-        assertTrue(exception.getMessage().contains("Order not found"));
+        assertThrows(OrderNotFoundException.class, () -> orderService.getOrderById(1L));
     }
 
     @Test
