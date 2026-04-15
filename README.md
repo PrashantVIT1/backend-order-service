@@ -441,16 +441,20 @@ Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFqMTIzNDUiLCJ1c2VySWQiOiIyIiwiaWF0Ijox
 
 #### Orders
 
-| Method | Endpoint            | Status Code | Description              |
-|--------|---------------------|:-----------:|--------------------------|
-| POST   | /orders             | 201         | Create a new order       |
-| PATCH  | /orders/{id}/status | 200         | Update order status      |
-| GET    | /orders             | 200         | Retrieve all the orders  |
-| GET    | /orders/{id}        | 200         | Retrieve an order by ID  |
-| DELETE | /orders/{id}        | 204         | Delete an order          |
+| Method | Endpoint                                | Status Code | Description              |
+|--------|-----------------------------------------|:-----------:|--------------------------|
+| POST   | /user/orders                            | 201         | Create a new order       |
+| PATCH  | /user/orders/{id}/status                | 200         | Update order status      |
+| GET    | /user/orders                            | 200         | Retrieve all the orders  |
+| GET    | /user/orders/{id}                       | 200         | Retrieve an order by ID  |
+| DELETE | /user/orders/{id}                       | 204         | Delete an order          |
+| PATCH  | /admin/orders/{id}/status               | 200         | Update order status      |
+| GET    | /admin/orders                           | 200         | Retrieve all the orders  |
+| GET    | /admin/orders/{id}                      | 200         | Retrieve an order by ID  |
+| DELETE | /admin/orders/{id}                      | 204         | Delete an order          |
 
 
-`POST`  http://localhost:8082/orders
+`POST`  http://localhost:8082/user/orders
 
 Request Body :
 ```json
@@ -481,7 +485,7 @@ Example Reference:
   <img width="1000" alt="POST method Postman" src="https://github.com/user-attachments/assets/42b6f1c5-fd61-438d-971c-404f043a2255" />
 </p>
 
-`PATCH` http://localhost:8082/orders/{id}/status
+`PATCH` http://localhost:8082/admin/orders/{id}/status
 
 Allowed Status Values:
 ```text
@@ -519,7 +523,7 @@ Example Reference:
   <img width="1000" alt="PATCH method Postman" src="https://github.com/user-attachments/assets/46e9f47a-ee47-4a8f-8e1f-cfb89ed824bd" />
 </p>
 
-`GET`  http://localhost:8082/orders
+`GET`  http://localhost:8082/admin/orders
 
 | Status Code | Reason |
 |:-----------:|--------|
@@ -543,7 +547,7 @@ Example Reference:
     <img width="1000" alt="image" src="https://github.com/user-attachments/assets/011aa93b-4130-46c7-90d0-80e898b932f5" />
 </p>
 
-`GET`  http://localhost:8082/orders/{id}
+`GET`  http://localhost:8082/admin/orders/{id}
 
 | Status Code | Reason |
 |:-----------:|--------|
@@ -566,7 +570,7 @@ Example Reference:
   <img width="1000" alt="image" src="https://github.com/user-attachments/assets/0b4a1722-adc4-4467-b938-84d95275457d" />
 </p>
 
-`DELETE` http://localhost:8082/orders/{id}
+`DELETE` http://localhost:8082/admin/orders/{id}
 
 Request Body :
 
