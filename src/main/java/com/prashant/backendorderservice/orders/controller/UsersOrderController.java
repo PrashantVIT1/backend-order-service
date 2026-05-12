@@ -39,7 +39,7 @@ public class UsersOrderController implements UsersOrderControllerDocs {
     // ================= UPDATE ORDER STATUS BY USER ID =================
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(
+    public ResponseEntity<UpdateOrderStatusResponse> updateOrderStatusByUserId(
             @PathVariable Long id,
             @Valid @RequestBody UpdateOrderStatusRequest request
     ) {
@@ -51,21 +51,21 @@ public class UsersOrderController implements UsersOrderControllerDocs {
     // ================= GET ORDER=================
 
     @GetMapping
-    public ResponseEntity<List<OrderResponse>> getOrders() {
+    public ResponseEntity<List<OrderResponse>> getOrdersByUserId() {
         return ResponseEntity.ok(usersOrderService.getOrdersByUserId());
     }
 
     // ================= GET ORDER BY ID=================
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<OrderResponse> getOrderByUserId(@PathVariable Long id) {
         return ResponseEntity.ok(usersOrderService.getOrderByUserId(id));
     }
 
     // ================= DELETE ORDER =================
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrderByUserId(@PathVariable Long id) {
         usersOrderService.deleteOrderByUserId(id);
         return ResponseEntity.noContent().build();
     }
