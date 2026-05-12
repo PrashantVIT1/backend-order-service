@@ -130,7 +130,7 @@ public interface UsersOrderControllerDocs {
                     )
             )
     })
-    ResponseEntity<UpdateOrderStatusResponse> updateOrderStatus(Long id, UpdateOrderStatusRequest request);
+    ResponseEntity<UpdateOrderStatusResponse> updateOrderStatusByUserId(Long id, UpdateOrderStatusRequest request);
 
     // ================= GET ORDERS=================
 
@@ -161,7 +161,7 @@ public interface UsersOrderControllerDocs {
                     )
             )
     })
-    ResponseEntity<List<OrderResponse>> getOrders();
+    ResponseEntity<List<OrderResponse>> getOrdersByUserId();
 
 
     // ================= GET ORDER BY ID=================
@@ -211,7 +211,7 @@ public interface UsersOrderControllerDocs {
                     )
             )
     })
-    ResponseEntity<OrderResponse> getOrderById(Long id);
+    ResponseEntity<OrderResponse> getOrderByUserId(Long id);
 
 
     // ================= DELETE ORDER =================
@@ -257,6 +257,6 @@ public interface UsersOrderControllerDocs {
                     )
             )
     })
-    ResponseEntity<Void> deleteOrderById(Long id);
+    ResponseEntity<Void> deleteOrderByUserId(Long id);
 
 }
