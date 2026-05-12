@@ -36,7 +36,7 @@ public class AuthService {
 
             String token = authUtil.generateAccessToken(user);
 
-            return new LoginResponse(token, user.getId());
+            return new LoginResponse(token);
         } catch (AuthenticationException ex) {
             throw new InvalidCredentialsException("Invalid username or password");
         }

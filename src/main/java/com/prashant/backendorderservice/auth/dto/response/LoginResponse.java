@@ -14,9 +14,4 @@ public class LoginResponse {
             example = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFqOTAiLCJ1c2VySWQiOiIyMyIsImlhdCI6MTc3MzY2MDQxNSwiZXhwIjoxNzczNjYxMDE1fQ.JAT5vBunKM8BoKyYsHLfKbRyQM5h-zA0-gqAp6EGjYifx8dAc2yR4Wk5g1J8E8wCFrNV7Q3CifnjQdxgRsPRaQ"
     )
     String token;
-    @Schema(
-            description = "Id associated with username",
-            example = "23"
-    )
-    Long userId;
 }
