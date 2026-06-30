@@ -1,8 +1,7 @@
 package com.prashant.backendorderservice.orders.service;
 
-import com.prashant.backendorderservice.auth.entity.User;
+
 import com.prashant.backendorderservice.auth.util.AuthUtil;
-import com.prashant.backendorderservice.orders.dto.request.CreateOrderRequest;
 import com.prashant.backendorderservice.orders.dto.request.UpdateOrderStatusRequest;
 import com.prashant.backendorderservice.orders.dto.response.OrderResponse;
 import com.prashant.backendorderservice.orders.dto.response.UpdateOrderStatusResponse;
@@ -11,7 +10,7 @@ import com.prashant.backendorderservice.orders.entity.OrderStatus;
 import com.prashant.backendorderservice.orders.exception.custom.OrderNotFoundException;
 import com.prashant.backendorderservice.orders.repository.OrderRepository;
 
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
