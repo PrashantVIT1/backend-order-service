@@ -1,5 +1,6 @@
 package com.prashant.backendorderservice.auth.entity;
 
+import com.prashant.backendorderservice.auth.entity.type.AuthProviderType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -16,7 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name ="app_user")
+@Table(name ="app_user", indexes ={
+        @Index(name = "idx_provider_id_provider_type", columnList = "providerId, providerType")
+})
 public class User implements UserDetails {
 
     @Id
@@ -27,9 +30,13 @@ public class User implements UserDetails {
     @NotBlank
     private String username;
 
-    @NotBlank
-    @Column(nullable = false)
     private String password;
+
+    private String providerId;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProviderType providerType;
+
 
     @Builder.Default
     private boolean accountNonExpired = true;

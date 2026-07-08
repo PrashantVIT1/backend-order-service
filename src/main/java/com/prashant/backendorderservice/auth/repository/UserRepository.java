@@ -1,6 +1,7 @@
 package com.prashant.backendorderservice.auth.repository;
 
 import com.prashant.backendorderservice.auth.entity.User;
+import com.prashant.backendorderservice.auth.entity.type.AuthProviderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -10,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     Optional<User> findByUsername(String username);
+
+    Optional<User> findByProviderIdAndProviderType(String providerId, AuthProviderType providerType);
 }

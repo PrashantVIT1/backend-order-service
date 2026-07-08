@@ -1,8 +1,9 @@
 package com.prashant.backendorderservice.orders.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prashant.backendorderservice.auth.config.WebSecurityConfig;
+import com.prashant.backendorderservice.auth.config.OAuth2SuccessHandler;
 import com.prashant.backendorderservice.auth.entity.User;
+import com.prashant.backendorderservice.auth.filter.JwtAuthFilter;
 import com.prashant.backendorderservice.auth.support.SecuredControllerTest;
 
 import com.prashant.backendorderservice.orders.dto.request.CreateOrderRequest;
@@ -11,10 +12,11 @@ import com.prashant.backendorderservice.orders.entity.OrderStatus;
 import com.prashant.backendorderservice.orders.service.UsersOrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(UsersOrderController.class)
-@Import(WebSecurityConfig.class)
+@AutoConfigureMockMvc(addFilters = false)
 @WithMockUser
 class UsersOrderControllerTest extends SecuredControllerTest {
 
@@ -39,6 +41,17 @@ class UsersOrderControllerTest extends SecuredControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
+
+    @MockBean
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
+
+
+    @MockBean
+    private AuthenticationProvider authenticationProvider;
 
     // ================= CREATE ORDER =================
 

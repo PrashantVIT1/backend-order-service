@@ -2,7 +2,6 @@ package com.prashant.backendorderservice.orders.repository;
 
 import com.prashant.backendorderservice.orders.entity.Order;
 import com.prashant.backendorderservice.orders.entity.OrderStatus;
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
