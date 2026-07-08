@@ -52,9 +52,7 @@ public abstract class AuthenticatedE2ETest {
                 .password(passwordEncoder.encode("password123"))
                 .build());
 
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername("testuser");
-        loginRequest.setPassword("password123");
+        LoginRequest loginRequest = new LoginRequest("testuser","password123");
 
         String responseBody = mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
