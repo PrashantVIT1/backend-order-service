@@ -181,6 +181,7 @@ backend-order-service/
 │   │   │       │   │   ├── swagger/
 │   │   │       │   │   │   └── AuthControllerDocs.java
 │   │   │       │   │   ├── AppConfig.java
+│   │   │       │   │   ├── OAuth2SuccessHandler.java
 │   │   │       │   │   └── WebSecurityConfig.java
 │   │   │       │   ├── controller/
 │   │   │       │   │   └── AuthController.java
@@ -191,6 +192,8 @@ backend-order-service/
 │   │   │       │   │       ├── LoginResponse.java
 │   │   │       │   │       └── SignupResponse.java
 │   │   │       │   ├── entity/
+│   │   │       │   │   ├── type/
+│   │   │       │   │   │   └── AuthProvider.java
 │   │   │       │   │   └── User.java
 │   │   │       │   ├── exception/
 │   │   │       │   │   ├── AuthExceptionHandler.java
@@ -209,9 +212,11 @@ backend-order-service/
 │   │   │       ├── orders/
 │   │   │       │   ├── config/
 │   │   │       │   │   └── swagger/
-│   │   │       │   │       └── OrderControllerDocs.java
+│   │   │       │   │       ├── OrderControllerDocs.java
+│   │   │       │   │       └── UserOrderControllerDocs.java
 │   │   │       │   ├── controller/
-│   │   │       │   │   └── OrderController.java
+│   │   │       │   │   ├── OrderController.java
+│   │   │       │   │   └── UserOrderController.java
 │   │   │       │   ├── dto/
 │   │   │       │   │   ├── request/
 │   │   │       │   │   │   ├── CreateOrderRequest.java
@@ -234,7 +239,9 @@ backend-order-service/
 │   │   │       │   │   └── OrderStatusDeserializer.java
 │   │   │       │   └── service/
 │   │   │       │       ├── OrderService.java
-│   │   │       │       └── OrderServiceOperations.java
+│   │   │       │       ├── OrderServiceOperations.java
+│   │   │       │       ├── UsersOrderService.java
+│   │   │       │       └── UsersOrderServiceOperations.java
 │   │   │       ├── shared/
 │   │   │       │   ├── config/
 │   │   │       │   │   ├── exception/
@@ -254,6 +261,7 @@ backend-order-service/
 │   │       │   │   ├── 001-create-app-user-table.yaml
 │   │       │   │   └── 001-create-orders-table.yaml
 │   │       │   └── db.changelog-master.yaml
+│   │       ├── application.yml
 │   │       └── application.properties
 │   └── test/
 │       └── java/
@@ -264,15 +272,16 @@ backend-order-service/
 │               │       └── SecuredControllerTest.java
 │               ├── orders/
 │               │   ├── controller/
-│               │   │   └── OrderControllerTest.java
+│               │   │   ├── OrderControllerTest.java
+│               │   │   └── UsersOrderControllerTest.java
 │               │   ├── integration/
 │               │   │   ├── OrderE2ETest.java
 │               │   │   └── OrderRepositoryIntegrationTest.java
 │               │   ├── repository/
 │               │   │   └── OrderRepositoryTest.java
 │               │   └── service/
-│               │       └── OrderServiceTest.java
-│               ├── AllTestsSuite.java
+│               │       ├── OrderServiceTest.java
+│               │       └── UsersOrderServiceTest.java
 │               └── BackendOrderServiceApplicationTests.java
 │
 ├── pom.xml
