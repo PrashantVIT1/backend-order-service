@@ -31,8 +31,8 @@ public class AuthController implements AuthControllerDocs {
                 .body(authService.signup(signupRequest));
     }
 
-    @GetMapping("/whoami")
-    public Object whoami(Authentication authentication) {
-        return authentication;
-    }
+    // @GetMapping("/whoami")
+    // public Object whoami(Authentication authentication) {
+    //     return authentication;
+    // }
 }
