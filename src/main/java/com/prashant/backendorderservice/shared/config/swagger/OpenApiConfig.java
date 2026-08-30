@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
                 description = "REST APIs for managing order lifecycle"
         ),
         servers = @Server(
-                url = "http://localhost:8082",
+                url = "http://localhost:8083",
                 description = "Local Development Server"
         ),
         security = @SecurityRequirement(name = "bearerAuth")
