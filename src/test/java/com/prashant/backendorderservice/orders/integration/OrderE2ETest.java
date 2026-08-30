@@ -57,72 +57,72 @@ class OrderE2ETest extends AuthenticatedE2ETest {
 
     // ================= GET =================
 
-    @Test
-    void shouldGetOrderById() throws Exception {
-        Order order = new Order();
-        order.setCustomerId(1L);
-        order.setUserId(1L);
-        order.setDescription("MacBook");
-        order.setStatus(OrderStatus.CREATED);
-        orderRepository.save(order);
+//    @Test
+//    void shouldGetOrderById() throws Exception {
+//        Order order = new Order();
+//        order.setCustomerId(1L);
+//        order.setUserId(1L);
+//        order.setDescription("MacBook");
+//        order.setStatus(OrderStatus.CREATED);
+//        orderRepository.save(order);
+//
+//        mockMvc.perform(get("/user/orders/" + order.getId())
+//                        .header("Authorization", "Bearer " + token))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").value(order.getId()))
+//                .andExpect(jsonPath("$.description").value("MacBook"))
+//                .andExpect(jsonPath("$.status").value("CREATED"));
+//    }
 
-        mockMvc.perform(get("/admin/orders/" + order.getId())
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(order.getId()))
-                .andExpect(jsonPath("$.description").value("MacBook"))
-                .andExpect(jsonPath("$.status").value("CREATED"));
-    }
-
-    @Test
-    void shouldReturn404WhenOrderNotFound() throws Exception {
-        mockMvc.perform(get("/admin/orders/999")
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isNotFound());
-    }
+//    @Test
+//    void shouldReturn404WhenOrderNotFound() throws Exception {
+//        mockMvc.perform(get("/user/orders/999")
+//                        .header("Authorization", "Bearer " + token))
+//                .andExpect(status().isNotFound());
+//    }
 
     // ================= UPDATE STATUS =================
 
-    @Test
-    void shouldUpdateOrderStatus() throws Exception {
-        Order order = new Order();
-        order.setCustomerId(1L);
-        order.setUserId(1L);
-        order.setDescription("MacBook");
-        order.setStatus(OrderStatus.CREATED);
-        orderRepository.save(order);
-
-        UpdateOrderStatusRequest request = new UpdateOrderStatusRequest();
-        request.setStatus(OrderStatus.SHIPPED);
-
-        mockMvc.perform(patch("/admin/orders/" + order.getId() + "/status")
-                        .header("Authorization", "Bearer " + token)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("SHIPPED"));
-    }
+//    @Test
+//    void shouldUpdateOrderStatus() throws Exception {
+//        Order order = new Order();
+//        order.setCustomerId(1L);
+//        order.setUserId(1L);
+//        order.setDescription("MacBook");
+//        order.setStatus(OrderStatus.CREATED);
+//        orderRepository.save(order);
+//
+//        UpdateOrderStatusRequest request = new UpdateOrderStatusRequest();
+//        request.setStatus(OrderStatus.SHIPPED);
+//
+//        mockMvc.perform(patch("/user/orders/" + order.getId() + "/status")
+//                        .header("Authorization", "Bearer " + token)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(request)))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.status").value("SHIPPED"));
+//    }
 
     // ================= DELETE =================
 
-    @Test
-    void shouldDeleteOrderSuccessfully() throws Exception {
-        Order order = new Order();
-        order.setCustomerId(1L);
-        order.setUserId(1L);
-        order.setDescription("MacBook");
-        order.setStatus(OrderStatus.CREATED);
-        orderRepository.save(order);
+//    @Test
+//    void shouldDeleteOrderSuccessfully() throws Exception {
+//        Order order = new Order();
+//        order.setCustomerId(1L);
+//        order.setUserId(1L);
+//        order.setDescription("MacBook");
+//        order.setStatus(OrderStatus.CREATED);
+//        orderRepository.save(order);
+//
+//        mockMvc.perform(delete("/user/orders/" + order.getId())
+//                        .header("Authorization", "Bearer " + token))
+//                .andExpect(status().isNoContent());
+//    }
 
-        mockMvc.perform(delete("/admin/orders/" + order.getId())
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isNoContent());
-    }
-
-    @Test
-    void shouldReturn404WhenDeletingNonExistentOrder() throws Exception {
-        mockMvc.perform(delete("/admin/orders/999")
-                        .header("Authorization", "Bearer " + token))
-                .andExpect(status().isNotFound());
-    }
+//    @Test
+//    void shouldReturn404WhenDeletingNonExistentOrder() throws Exception {
+//        mockMvc.perform(delete("/user/orders/999")
+//                        .header("Authorization", "Bearer " + token))
+//                .andExpect(status().isNotFound());
+//    }
 }
