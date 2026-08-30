@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-add-provider-index
+      author: prashant
+
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          indexExists:
+            tableName: app_user
+            indexName: idx_provider_id_provider_type
+
+      changes:
+        - createIndex:
+            tableName: app_user
+            indexName: idx_provider_id_provider_type
+            columns:
+              - column:
+                  name: provider_id
+              - column:
+                  name: provider_type
+
+      rollback:
+        - dropIndex:
+            tableName: app_user
+            indexName: idx_provider_id_provider_type

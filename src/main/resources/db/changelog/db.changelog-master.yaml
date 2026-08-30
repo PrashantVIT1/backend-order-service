@@ -3,3 +3,8 @@ databaseChangeLog:
       file: db/changelog/changes/001-create-orders-table.yaml
   - include:
       file: db/changelog/changes/001-create-app-user-table.yaml
+  - include:
+      file: db/changelog/changes/002-create-app-user-roles-table.yaml
+  - include:
+      file: db/changelog/changes/003-add-provider-index.yaml
+

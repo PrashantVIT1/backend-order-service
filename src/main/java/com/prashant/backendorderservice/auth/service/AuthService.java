@@ -5,6 +5,7 @@ import com.prashant.backendorderservice.auth.dto.response.LoginResponse;
 import com.prashant.backendorderservice.auth.dto.response.SignupResponse;
 import com.prashant.backendorderservice.auth.entity.User;
 import com.prashant.backendorderservice.auth.entity.type.AuthProviderType;
+import com.prashant.backendorderservice.auth.entity.type.RoleType;
 import com.prashant.backendorderservice.auth.exception.InvalidCredentialsException;
 import com.prashant.backendorderservice.auth.exception.UserAlreadyExistsException;
 import com.prashant.backendorderservice.auth.repository.UserRepository;
@@ -21,6 +22,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 
 @Service
@@ -58,6 +61,7 @@ public class AuthService {
                 .username(signupRequest.getUsername())
                 .providerId(providerId)
                 .providerType(authProviderType)
+                .roles(Set.of(RoleType.USER))
                 .build();
 
         if(authProviderType == AuthProviderType.EMAIL){

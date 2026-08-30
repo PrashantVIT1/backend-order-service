@@ -23,6 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+import static com.prashant.backendorderservice.auth.entity.type.RoleType.*;
 
 @Configuration
 @RequiredArgsConstructor
@@ -42,34 +43,33 @@ public class WebSecurityConfig {
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .cors(Customizer.withDefaults())
                 .sessionManagement(sessionConfig ->
-                        sessionConfig.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                        sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->auth
                         .requestMatchers(
                                 "/login",
-                                "/api/**",
                                 "/oauth2/**",
                                 "/actuator/health",
                                 "/auth/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
-                                "/api/v1/login"
+                                "/signup"
                         ).permitAll()
-                                .anyRequest().authenticated()
+                        .requestMatchers("/admin/**")
+                                .hasRole(ADMIN.name())
+                                .anyRequest()
+                                .authenticated()
                 )
                 .exceptionHandling(ex -> ex
                 .authenticationEntryPoint(customAuthEntryPoint)
         )
-//                .oauth2Login(oAuth2 -> oAuth2.failureHandler(
-//                                (HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) -> {
-//                                    log.error("Oauth2 error: {}", exception.getMessage());
-//                                })
-//                        .successHandler(oAuth2SuccessHandler)
-//            )
-
-//                .oauth2Login(Customizer.withDefaults())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                ;
+                .oauth2Login(oAuth2 -> oAuth2.failureHandler(
+                                (HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) -> {
+                                    log.error("Oauth2 error: {}", exception.getMessage());
+                                })
+                        .successHandler(oAuth2SuccessHandler)
+            )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
