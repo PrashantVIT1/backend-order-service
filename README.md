@@ -6,6 +6,24 @@ The service exposes RESTful APIs for creating, updating, retrieving, and deletin
 
 The application follows **industry-standard layered architecture** (Controller, Service, Repository) and is designed to be easily extensible for database integration, security, and cloud deployment. CI pipelines are configured using **GitHub Actions** to automate builds and ensure code quality.
 
+## Features
+- RESTful APIs built using Spring Boot
+- JWT-based stateless authentication
+- Role-Based Access Control (RBAC)
+- OAuth2 authentication
+  * Google Login
+  * GitHub Login
+- Spring Security integration
+- User-specific order access
+- Admin-specific order management
+- PostgreSQL database
+- Liquibase database migrations
+- Docker containerization
+- Unit and integration testing
+- Testcontainers for database integration tests
+- OpenAPI / Swagger documentation
+- CI pipeline using GitHub Actions
+
 ## Table of Contents
 
 - [Architecture Overview](#architecture-overview)
@@ -51,6 +69,13 @@ graph TD
 
 The service follows a standard layered architecture:
 
+- **Security Layer**
+  Handles authentication and authorization using:
+  - Spring Security
+  - JWT
+  - Role-Based Access Control
+  - OAuth2
+
 - **Controller Layer**  
   Handles incoming HTTP requests and delegates processing to the service layer.
 
@@ -62,6 +87,219 @@ The service follows a standard layered architecture:
 
 - **Repository Layer**  
   Manages persistence and database interaction using Spring Data JPA.
+  
+    
+## Security Architecture
+The application supports multiple authentication mechanisms.
+
+```mermaid
+graph TD
+
+    Client[Client]
+
+    Client -->|Username & Password| Login[/auth/login/]
+    Login --> AuthService[Authentication Service]
+    AuthService --> JWT[Generate JWT Token]
+    JWT --> Client
+
+    Client -->|Bearer Token| ProtectedAPI[Protected APIs]
+    ProtectedAPI --> JwtFilter[JWT Authentication Filter]
+    JwtFilter --> SecurityContext[Spring Security Context]
+
+    Client -->|OAuth2 Login| OAuth2[Google / GitHub]
+    OAuth2 --> OAuthSuccess[OAuth2 Success Handler]
+    OAuthSuccess --> JWT
+```
+
+The authentication mechanisms include:
+
+- Username and password authentication
+- JWT-based authentication
+- Role-based authorization
+- OAuth2 authentication using Google
+- OAuth2 authentication using GitHub
+
+#### JWT Authentication
+
+The application uses JSON Web Tokens (JWT) for stateless authentication. After successful login, the server generates a JWT token.
+
+Login
+Endpoint
+POST /auth/login
+
+Request
+```
+{
+  "username": "testuser",
+  "password": "password123"
+}
+```
+
+Response
+```
+{
+  "token": "<JWT_TOKEN>"
+}
+```
+
+The client must include the token in subsequent requests.
+
+Authorization: Bearer <JWT_TOKEN>
+
+  
+#### JWT Authentication Flow
+```mermaid
+
+sequenceDiagram
+    participant Client
+    participant AuthController
+    participant AuthService
+    participant JwtUtil
+    participant JwtAuthFilter
+    participant ProtectedAPI
+
+    Client->>AuthController: POST /auth/login
+    AuthController->>AuthService: Authenticate credentials
+    AuthService->>JwtUtil: Generate JWT
+    JwtUtil-->>AuthService: JWT token
+    AuthService-->>AuthController: Authentication response
+    AuthController-->>Client: Return JWT token
+
+    Client->>JwtAuthFilter: Request with Bearer token
+    JwtAuthFilter->>JwtUtil: Validate JWT
+    JwtUtil-->>JwtAuthFilter: Token valid
+
+    JwtAuthFilter->>JwtAuthFilter: Set SecurityContext
+    JwtAuthFilter->>ProtectedAPI: Continue request
+    ProtectedAPI-->>Client: Return response
+
+```
+
+#### Role-Based Authorization
+
+The application implements Role-Based Access Control (RBAC) to control access to protected resources.
+
+Different API endpoints are accessible based on the authenticated user's role.
+- User APIs
+
+    Endpoints under:
+    ```
+    /user/**
+    ```
+    
+    are intended for authenticated users. Users can manage their own orders.
+    
+    Examples:
+    ```
+    POST   /user/orders
+    GET    /user/orders
+    GET    /user/orders/{id}
+    PATCH  /user/orders/{id}/status
+    DELETE /user/orders/{id}
+    ```
+
+- Admin APIs
+    Endpoints under:
+    ```
+    /admin/**
+    ```
+    are restricted to users with administrative privileges.
+    
+    Examples:
+    ```
+    GET    /admin/orders
+    GET    /admin/orders/{id}
+    PATCH  /admin/orders/{id}/status
+    DELETE /admin/orders/{id}
+    ```
+#### OAuth2 Authentication
+
+The application supports OAuth2 authentication through external providers.
+Currently supported providers:
+
+* Google
+* GitHub
+  
+OAuth2 allows users to authenticate using an existing account instead of creating a traditional username and password.
+
+#### OAuth2 Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Application
+    participant Provider as Google/GitHub
+    participant OAuthHandler as OAuth2 Success Handler
+    participant JwtUtil
+
+    User->>Application: Start OAuth2 login
+    Application->>Provider: Redirect to provider
+
+    User->>Provider: Authenticate
+    Provider-->>Application: OAuth2 callback
+
+    Application->>OAuthHandler: OAuth2 authentication successful
+    OAuthHandler->>JwtUtil: Generate JWT token
+    JwtUtil-->>OAuthHandler: JWT token
+
+    OAuthHandler-->>User: Authentication successful with JWT
+```
+#### OAuth2 Provider Selection Flow
+Users can authenticate using their Google or GitHub account but with can be extended to other provider as well with minimal changes.
+
+```mermaid
+flowchart LR
+    A[Client] --> B{Choose Provider}
+
+    B -->|Google| C["Google Login<br/>/oauth2/authorization/google"]
+    B -->|GitHub| D["GitHub Login<br/>/oauth2/authorization/github"]
+
+    C --> E[Spring Security OAuth2]
+    D --> E
+
+    E --> F[OAuth2 Success Handler]
+    F --> G[Generate JWT Token]
+    G --> H[Client Receives JWT]
+```
+#### Signup
+Endpoint
+POST /auth/signup
+
+Request
+```
+{
+  "username": "testuser",
+  "password": "password123"
+}
+```
+Success Response
+```
+{
+  "id": 1,
+  "username": "testuser"
+}
+```
+
+#### Login
+Endpoint
+POST /auth/login
+
+Request
+```
+{
+  "username": "testuser",
+  "password": "password123"
+}
+```
+Success Response
+```
+{
+  "token": "<JWT_TOKEN>"
+}
+```
+
+Use the token for protected endpoints:
+Authorization: Bearer <JWT_TOKEN>
 
 ## System Design Considerations
 
@@ -424,8 +662,7 @@ Request Body :
 Response Body :
 ```json
 {
-    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFqMTIzNDUiLCJ1c2VySWQiOiIyNSIsImlhdCI6MTc3MzY4MDIzNiwiZXhwIjoxNzczNjgwODM2fQ.8AW4aWZA1TcawmlieHuPdW8qgnjMcTuHJHMCpAvTgFN9SVwGWIo4UdHvJ6H7npkuXjueioksKpAVhHSsJsRulg",
-    "userId": 25
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcmFqMTIzNDUiLCJ1c2VySWQiOiIyNSIsImlhdCI6MTc3MzY4MDIzNiwiZXhwIjoxNzczNjgwODM2fQ.8AW4aWZA1TcawmlieHuPdW8qgnjMcTuHJHMCpAvTgFN9SVwGWIo4UdHvJ6H7npkuXjueioksKpAVhHSsJsRulg"
 } 
 ```
 
@@ -599,6 +836,21 @@ Example Reference:
 <p align="center">
   <img width="1000" alt="DELETE method Postman" src="https://github.com/user-attachments/assets/99987431-092c-4687-adc7-ed6f3b5a8d75" />
 </p>
+
+## Security Highlights
+The security implementation demonstrates several important Spring Security concepts:
+
+- Stateless authentication using JWT
+- Custom JWT authentication filter
+- Spring Security filter chain
+- Role-based authorization
+- Protected API endpoints
+- OAuth2 client integration
+- Google OAuth2 login
+- GitHub OAuth2 login
+- Custom OAuth2 authentication success handling
+- Centralized authentication exception handling
+- Secure password authentication
 
 ## Future Improvements
 
