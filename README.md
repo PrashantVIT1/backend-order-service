@@ -27,6 +27,7 @@ The application follows **industry-standard layered architecture** (Controller, 
 ## Table of Contents
 
 - [Architecture Overview](#architecture-overview)
+- [Security Architecture](#Security-Architecture)
 - [System Design Considerations](#system-design-considerations)
 - [Key Highlights](#key-highlights)
 - [Local Setup Instructions](#local-setup-instructions)
@@ -35,14 +36,20 @@ The application follows **industry-standard layered architecture** (Controller, 
 - [CI/CD Workflow](#cicd-workflow)
 - [Swagger API Documentation](#swagger-api-documentation)
 - [Endpoints](#endpoints)
+- [Security Highlights](#Security-Highlights)
 - [Future Improvements](#future-improvements)
 - [License](#license)
 
 ## Architecture Overview
-
 ```mermaid
 graph TD
     Client[Client / API Consumer]
+
+    subgraph Security Layer
+        Security[Spring Security Filter Chain]
+        JwtFilter[JWT Authentication Filter]
+        Auth[Authentication / Authorization]
+    end
 
     subgraph API Layer
         Controller[Order Controller]
@@ -58,11 +65,16 @@ graph TD
         DB[(PostgreSQL Database)]
     end
 
-    Client -->|HTTP Request| Controller
+    Client -->|HTTP Request + JWT| Security
+    Security --> JwtFilter
+    JwtFilter --> Auth
+    Auth -->|Authorized Request| Controller
+
     Controller -->|Request DTO| DTO
     DTO -->|Validated Data| Service
     Service -->|JPA Calls| Repository
     Repository -->|SQL Queries| DB
+
     Service -->|Response DTO| DTO
     DTO -->|HTTP Response| Client
 ```
